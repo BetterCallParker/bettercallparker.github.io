@@ -1,0 +1,32 @@
+name: Simple Test Workflow
+
+# Triggers: This will run when you push to main branch or manually dispatch
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:  # Allows manual triggering
+
+# Jobs to run
+jobs:
+  test-workflow:
+    # Run on the latest Ubuntu
+    runs-on: ubuntu-latest
+    
+    # Steps in this job
+    steps:
+      # Checkout the repository code
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      # Run a simple shell command
+      - name: Print Hello World
+        run: |
+          echo "Hello from GitHub Actions!"
+          echo "Repository: ${{ github.repository }}"
+          echo "Workflow triggered by: ${{ github.actor }}"
+          date
+      
+      # Optional: Add a step to list repository contents
+      - name: List Repository Contents
+        run: |
+          ls -R
