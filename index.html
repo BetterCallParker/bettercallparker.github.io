@@ -17,6 +17,69 @@
             --light-gray: #e2e8f0;
         }
         
+        /* All your other CSS rules here */
+        
+        /* Personal Introduction */
+        .parker-intro {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        
+        .parker-photo {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin-bottom: 1.5rem;
+            border: 4px solid var(--primary);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+        }
+        
+        .parker-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .parker-message h2 {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+        
+        .parker-tagline {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--secondary);
+            margin-bottom: 1rem;
+        }
+        
+        .parker-promise {
+            margin-top: 1rem;
+            padding: 0.75rem;
+            background-color: rgba(5, 150, 105, 0.1);
+            border-radius: 8px;
+            border-left: 4px solid var(--secondary);
+        }<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BetterCallParker Realty</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Base Styles */
+        :root {
+            --primary: #1e40af;
+            --primary-light: #3b82f6;
+            --secondary: #059669;
+            --light: #f8fafc;
+            --dark: #1e293b;
+            --gray: #64748b;
+            --light-gray: #e2e8f0;
+        }
+        
         * {
             margin: 0;
             padding: 0;
@@ -194,8 +257,9 @@
         .process-step {
             border-left: 4px solid var(--primary);
             padding-left: 1rem;
-            margin-bottom: 1.5rem;
+            margin-bottom: 2rem;
             position: relative;
+            scroll-margin-top: 80px;
         }
         
         .process-step:last-child {
@@ -213,11 +277,55 @@
             border-radius: 50%;
         }
         
+        .step-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+        
         .step-number {
             display: inline-block;
             font-weight: 700;
             color: var(--primary);
-            margin-bottom: 0.25rem;
+            margin-right: 0.5rem;
+        }
+        
+        .step-header h4 {
+            margin-bottom: 0;
+            flex-grow: 1;
+        }
+        
+        .share-button {
+            background-color: var(--primary-light);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .share-button:hover {
+            background-color: var(--primary);
+            transform: scale(1.1);
+        }
+        
+        .step-details {
+            padding-left: 1.5rem;
+            margin: 0.75rem 0;
+        }
+        
+        .step-details li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .step-details ul {
+            margin: 0.5rem 0;
+            padding-left: 1.25rem;
         }
         
         /* Alert Box */
@@ -397,12 +505,20 @@
     
     <!-- Main Content Section -->
     <main class="container">
-        <section id="intro">
+        <!-- Personal Introduction Section -->
+        <section id="about-parker">
             <div class="section-content">
-                <h2 class="section-title">Your Journey Home Starts Here</h2>
-                <p>At BetterCallParker, we believe buying a home should be an exciting journey, not a stressful one. We'll guide you every step of the way with our specialized knowledge and commitment to your success.</p>
-                
-                <p>Our $1 promise: <strong>We're so confident in our ability to negotiate seller-paid commissions that we'll charge you just $1 if we can't get the seller to cover our fees.</strong></p>
+                <div class="parker-intro">
+                    <div class="parker-photo">
+                        <img src="parker-photo.png" alt="Parker" />
+                    </div>
+                    <div class="parker-message">
+                        <h2>Your Journey Starts With Parker</h2>
+                        <p class="parker-tagline">Tucson's Premier Real Estate Agent</p>
+                        <p>I'm committed to making your home buying experience transparent, educational, and stress-free. With my expertise and personalized guidance, you'll navigate Tucson's real estate market with confidence.</p>
+                        <p class="parker-promise"><strong>My $1 promise:</strong> I'm so confident in my ability to negotiate seller-paid commissions that I'll charge you just $1 if I can't get the seller to cover my fees.</p>
+                    </div>
+                </div>
             </div>
         </section>
         
@@ -426,42 +542,152 @@
             <div id="process" class="tab-content active">
                 <div class="section-content">
                     <h3>Your Path to Homeownership</h3>
-                    <p>We break down the complicated process into simple, manageable steps.</p>
+                    <p>I break down the complicated process into simple, manageable steps. Tap the share icon to send any step to your clients.</p>
                     
-                    <div class="process-step">
-                        <span class="step-number">Step 1</span>
-                        <h4>Initial Consultation</h4>
-                        <p>We'll discuss your needs, preferences, and budget to create your personalized home search plan. This free consultation helps us understand exactly what you're looking for.</p>
+                    <div id="step1" class="process-step">
+                        <div class="step-header">
+                            <span class="step-number">Step 1</span>
+                            <h4>Initial Consultation</h4>
+                            <button class="share-button" data-step="step1" aria-label="Share this step">
+                                <i class="fas fa-share-alt"></i>
+                            </button>
+                        </div>
+                        <p>I'll discuss your needs, preferences, and budget to create your personalized home search plan. This free consultation helps me understand exactly what you're looking for.</p>
+                        <p>During this meeting, we'll also review your financial readiness, potential timeline, and the current Tucson market conditions to set realistic expectations.</p>
                     </div>
                     
-                    <div class="process-step">
-                        <span class="step-number">Step 2</span>
-                        <h4>Buyer Representation Agreement</h4>
-                        <p>We'll explain the new NAR requirements in simple terms and outline exactly how we work for you. No confusing jargon or hidden surprises.</p>
+                    <div id="step2" class="process-step">
+                        <div class="step-header">
+                            <span class="step-number">Step 2</span>
+                            <h4>Buyer Representation Agreement</h4>
+                            <button class="share-button" data-step="step2" aria-label="Share this step">
+                                <i class="fas fa-share-alt"></i>
+                            </button>
+                        </div>
+                        <p>Per the new NAR settlement rules, we'll need to sign a Buyer Representation Agreement before viewing homes. This document:</p>
+                        <ul class="step-details">
+                            <li>Outlines my responsibilities as your agent</li>
+                            <li>Details how I'll be compensated (with my $1 promise)</li>
+                            <li>Explains what exclusive representation means for you</li>
+                            <li>Sets the terms of our professional relationship</li>
+                        </ul>
+                        <p>I'll walk you through each section and answer all your questions before signing.</p>
                     </div>
                     
-                    <div class="process-step">
-                        <span class="step-number">Step 3</span>
-                        <h4>Home Search & Viewings</h4>
-                        <p>We'll help you find properties that match your criteria and schedule convenient viewings. You'll receive honest feedback about each property's pros and cons.</p>
+                    <div id="step3" class="process-step">
+                        <div class="step-header">
+                            <span class="step-number">Step 3</span>
+                            <h4>Home Search & Viewings</h4>
+                            <button class="share-button" data-step="step3" aria-label="Share this step">
+                                <i class="fas fa-share-alt"></i>
+                            </button>
+                        </div>
+                        <p>I'll help you find properties that match your criteria and schedule convenient viewings. You'll receive my honest feedback about each property's pros and cons.</p>
+                        <p>I'll provide you with:</p>
+                        <ul class="step-details">
+                            <li>Custom property alerts based on your preferences</li>
+                            <li>Detailed Tucson neighborhood information and school ratings</li>
+                            <li>Comparable sales data to understand fair market value</li>
+                            <li>Identification of potential issues or hidden costs</li>
+                        </ul>
                     </div>
                     
-                    <div class="process-step">
-                        <span class="step-number">Step 4</span>
-                        <h4>Offer & Negotiation</h4>
-                        <p>We'll guide you through making a competitive offer and leverage our expertise to negotiate the best terms possible, including having the seller cover our commission.</p>
+                    <div id="step4" class="process-step">
+                        <div class="step-header">
+                            <span class="step-number">Step 4</span>
+                            <h4>Offer & Earnest Money</h4>
+                            <button class="share-button" data-step="step4" aria-label="Share this step">
+                                <i class="fas fa-share-alt"></i>
+                            </button>
+                        </div>
+                        <p>When you find the right home, I'll prepare and submit a competitive offer. This includes:</p>
+                        <ul class="step-details">
+                            <li><strong>Earnest Money Deposit:</strong> This "good faith" deposit (typically 1-2% of purchase price) shows sellers you're serious</li>
+                            <li>The earnest money is submitted with your offer or within 1-3 business days after acceptance</li>
+                            <li>The escrow company will contact you directly to arrange payment, and I'll help coordinate this process</li>
+                            <li>This money becomes part of your down payment if the purchase completes successfully</li>
+                            <li>I'll include contingencies to protect this deposit if issues arise</li>
+                        </ul>
+                        <p>I'll negotiate strongly on your behalf for the best price, terms, and to have the seller cover my commission.</p>
                     </div>
                     
-                    <div class="process-step">
-                        <span class="step-number">Step 5</span>
-                        <h4>Due Diligence Period</h4>
-                        <p>We'll connect you with trusted inspectors and help you evaluate the property's condition, ensuring you know exactly what you're buying.</p>
+                    <div id="step5" class="process-step">
+                        <div class="step-header">
+                            <span class="step-number">Step 5</span>
+                            <h4>Due Diligence Period</h4>
+                            <button class="share-button" data-step="step5" aria-label="Share this step">
+                                <i class="fas fa-share-alt"></i>
+                            </button>
+                        </div>
+                        <p>After your offer is accepted, we enter the 10-day inspection period:</p>
+                        <ul class="step-details">
+                            <li>I'll help you schedule a comprehensive home inspection</li>
+                            <li>We'll review the inspection report together in detail</li>
+                            <li>If issues are found, I'll draft a repair request listing items you want the seller to address</li>
+                            <li>The seller typically has 3-5 days to respond with one of these options:
+                                <ul>
+                                    <li>Accept all repair requests</li>
+                                    <li>Decline all repair requests</li>
+                                    <li>Agree to some repairs but not others</li>
+                                    <li>Offer a credit instead of completing repairs</li>
+                                </ul>
+                            </li>
+                            <li>If you're satisfied with their response, we proceed with the purchase</li>
+                            <li>If not, you can walk away and <strong>receive your earnest money back</strong> as long as we're still within the due diligence period</li>
+                        </ul>
+                        <p>I'll also schedule any additional specialized inspections if needed (termite, radon, etc.).</p>
                     </div>
                     
-                    <div class="process-step">
-                        <span class="step-number">Step 6</span>
-                        <h4>Closing Process</h4>
-                        <p>We'll prepare you for closing day and be there to ensure everything goes smoothly as you receive the keys to your new home.</p>
+                    <div id="step6" class="process-step">
+                        <div class="step-header">
+                            <span class="step-number">Step 6</span>
+                            <h4>Loan Processing & Appraisal</h4>
+                            <button class="share-button" data-step="step6" aria-label="Share this step">
+                                <i class="fas fa-share-alt"></i>
+                            </button>
+                        </div>
+                        <p>While inspections are happening, your mortgage lender will be processing your loan:</p>
+                        <ul class="step-details">
+                            <li>The lender will order an appraisal to verify the home's value</li>
+                            <li>You'll need to provide additional financial documentation as requested</li>
+                            <li>I'll address any appraisal issues if the home doesn't appraise for the offer price</li>
+                            <li>I'll monitor deadlines and keep you updated throughout this process</li>
+                        </ul>
+                    </div>
+                    
+                    <div id="step7" class="process-step">
+                        <div class="step-header">
+                            <span class="step-number">Step 7</span>
+                            <h4>Final Walkthrough</h4>
+                            <button class="share-button" data-step="step7" aria-label="Share this step">
+                                <i class="fas fa-share-alt"></i>
+                            </button>
+                        </div>
+                        <p>Shortly before closing (usually 24-48 hours), I'll conduct a final walkthrough of the property with you to:</p>
+                        <ul class="step-details">
+                            <li>Verify all agreed-upon repairs have been completed</li>
+                            <li>Confirm the property's condition hasn't changed since your last viewing</li>
+                            <li>Ensure all appliances and systems are functioning properly</li>
+                            <li>Check that the sellers have removed all their belongings (unless otherwise agreed)</li>
+                        </ul>
+                    </div>
+                    
+                    <div id="step8" class="process-step">
+                        <div class="step-header">
+                            <span class="step-number">Step 8</span>
+                            <h4>Closing Day</h4>
+                            <button class="share-button" data-step="step8" aria-label="Share this step">
+                                <i class="fas fa-share-alt"></i>
+                            </button>
+                        </div>
+                        <p>The big day has arrived! Here's what to expect:</p>
+                        <ul class="step-details">
+                            <li>You'll sign numerous documents at the title company or attorney's office</li>
+                            <li>I'll attend with you to answer any last-minute questions</li>
+                            <li>You'll need to bring a valid photo ID and certified funds for closing costs</li>
+                            <li>Once all paperwork is complete and funds have been transferred, you'll receive the keys to your new home!</li>
+                        </ul>
+                        <p>My support doesn't end at closing - I'm here to help with any questions even after you've moved in.</p>
                     </div>
                 </div>
             </div>
@@ -481,7 +707,7 @@
                     <div class="features">
                         <div class="feature-card">
                             <h5 class="feature-title">Written Agreements</h5>
-                            <p>You'll now sign a formal agreement before we show you homes. This protects your interests and clearly outlines our responsibilities.</p>
+                            <p>You'll now sign a formal agreement before I show you homes. This protects your interests and clearly outlines my responsibilities.</p>
                         </div>
                         
                         <div class="feature-card">
@@ -495,8 +721,8 @@
                         </div>
                     </div>
                     
-                    <h4>Our Commitment to You:</h4>
-                    <p>At BetterCallParker, we embrace these changes as an opportunity to demonstrate our value. We'll:</p>
+                    <h4>My Commitment to You:</h4>
+                    <p>As your agent, I embrace these changes as an opportunity to demonstrate my value. I'll:</p>
                     <ul class="steps-list">
                         <li>
                             <div class="step-icon">✓</div>
@@ -508,11 +734,11 @@
                         </li>
                         <li>
                             <div class="step-icon">✓</div>
-                            <p>Show you exactly how we earn our commission through excellent service</p>
+                            <p>Show you exactly how I earn my commission through excellent service</p>
                         </li>
                         <li>
                             <div class="step-icon">✓</div>
-                            <p>Work to have the seller cover our commission whenever possible</p>
+                            <p>Work to have the seller cover my commission whenever possible</p>
                         </li>
                     </ul>
                 </div>
@@ -521,35 +747,35 @@
             <!-- Promise Tab -->
             <div id="promise" class="tab-content">
                 <div class="section-content">
-                    <h3>Our Confidence Guarantee</h3>
+                    <h3>My Confidence Guarantee</h3>
                     
                     <div class="promise-box">
                         <h4 class="promise-title">The $1 Promise</h4>
-                        <p>We're so confident in our negotiation skills that we'll charge you just $1 for our services if we can't get the seller to cover our commission.</p>
-                        <p>This isn't a gimmick—it's our way of proving we're truly working for your best interests.</p>
+                        <p>I'm so confident in my negotiation skills that I'll charge you just $1 for my services if I can't get the seller to cover my commission.</p>
+                        <p>This isn't a gimmick—it's my way of proving I'm truly working for your best interests.</p>
                     </div>
                     
                     <h4>How It Works:</h4>
                     <ul class="steps-list">
                         <li>
                             <div class="step-icon">1</div>
-                            <p>We'll discuss our standard commission structure during our initial consultation</p>
+                            <p>I'll discuss my standard commission structure during our initial consultation</p>
                         </li>
                         <li>
                             <div class="step-icon">2</div>
-                            <p>For properties you're interested in, we'll strategize how to get the seller to cover our commission</p>
+                            <p>For properties you're interested in, I'll strategize how to get the seller to cover my commission</p>
                         </li>
                         <li>
                             <div class="step-icon">3</div>
-                            <p>We'll use our proven negotiation techniques to include our commission in the seller's closing costs</p>
+                            <p>I'll use my proven negotiation techniques to include my commission in the seller's closing costs</p>
                         </li>
                         <li>
                             <div class="step-icon">4</div>
-                            <p>If we fail to get the seller to cover our commission, you'll pay just $1 for our services</p>
+                            <p>If I fail to get the seller to cover my commission, you'll pay just $1 for my services</p>
                         </li>
                     </ul>
                     
-                    <p><strong>Why do we offer this?</strong> Because we want you to know we're on your side. Our success depends on your satisfaction and referrals, not on extracting fees from you.</p>
+                    <p><strong>Why do I offer this?</strong> Because I want you to know I'm on your side. My success depends on your satisfaction and referrals, not on extracting fees from you.</p>
                 </div>
             </div>
             
@@ -557,22 +783,22 @@
             <div id="stories" class="tab-content">
                 <div class="section-content">
                     <h3>Client Success Stories</h3>
-                    <p>Don't just take our word for it. Here's what our clients have to say:</p>
+                    <p>Don't just take my word for it. Here's what my clients have to say:</p>
                     
                     <div class="testimonials">
                         <div class="testimonial">
                             <p class="testimonial-text">Parker made buying our first home so much easier than we expected. The way he explained the new buyer broker agreement made us feel confident we were in good hands.</p>
-                            <span class="testimonial-author">— Jamie & Chris</span>
+                            <span class="testimonial-author">— Jamie & Chris, First-time Buyers in Tucson</span>
                         </div>
                         
                         <div class="testimonial">
                             <p class="testimonial-text">I was nervous about the new NAR rules I'd been hearing about, but Parker broke everything down into simple terms. And yes, he got the seller to pay his commission!</p>
-                            <span class="testimonial-author">— Sophia M.</span>
+                            <span class="testimonial-author">— Sophia M., Oro Valley</span>
                         </div>
                         
                         <div class="testimonial">
                             <p class="testimonial-text">As a single parent, I was concerned about additional costs. Parker's $1 promise gave me confidence, and he delivered by negotiating for the seller to cover his commission.</p>
-                            <span class="testimonial-author">— Michael T.</span>
+                            <span class="testimonial-author">— Michael T., Downtown Tucson</span>
                         </div>
                     </div>
                 </div>
@@ -583,17 +809,21 @@
         <section id="contact">
             <div class="section-content">
                 <h3 class="section-title">Ready to Get Started?</h3>
-                <p class="text-center">Take the first step toward finding your dream home with expert guidance every step of the way.</p>
+                <p class="text-center">Take the first step toward finding your dream home in Tucson with my expert guidance every step of the way.</p>
                 
                 <div style="text-align: center; margin: 2rem 0;">
                     <a href="tel:1234567890" class="cta-button" style="background-color: var(--primary); color: white;">
-                        <i class="fas fa-phone"></i> Call Now
+                        <i class="fas fa-phone"></i> Call Parker Now
                     </a>
                 </div>
                 
                 <p style="text-align: center; font-size: 0.9rem;">
-                    Or email us at <a href="mailto:contact@bettercallparker.com" style="color: var(--primary); font-weight: 600;">contact@bettercallparker.com</a>
+                    Or email me at <a href="mailto:parker@bettercallparker.com" style="color: var(--primary); font-weight: 600;">parker@bettercallparker.com</a>
                 </p>
+                <!-- Add this where you want the link to appear -->
+<a href="agreement.html" class="cta-button">
+    <i class="fas fa-file-contract"></i> View Buyer Agreement
+</a>
             </div>
         </section>
     </main>
@@ -635,6 +865,137 @@
                 button.classList.add('active');
                 const tabId = button.getAttribute('data-tab');
                 document.getElementById(tabId).classList.add('active');
+            });
+        });
+        
+        // Share functionality for process steps
+        const shareButtons = document.querySelectorAll('.share-button');
+        
+        // Check if URL contains a step hash and scroll to it
+        window.addEventListener('DOMContentLoaded', () => {
+            if (window.location.hash) {
+                const targetStep = document.querySelector(window.location.hash);
+                if (targetStep) {
+                    // Ensure the process tab is active
+                    tabButtons.forEach(btn => btn.classList.remove('active'));
+                    tabContents.forEach(content => content.classList.remove('active'));
+                    
+                    document.querySelector('[data-tab="process"]').classList.add('active');
+                    document.getElementById('process').classList.add('active');
+                    
+                    // Scroll to the target step
+                    setTimeout(() => {
+                        targetStep.scrollIntoView({ behavior: 'smooth' });
+                    }, 300);
+                }
+            }
+        });
+        
+        // Share functionality
+        shareButtons.forEach(button => {
+            button.addEventListener('click', async () => {
+                const stepId = button.getAttribute('data-step');
+                const url = `${window.location.origin}${window.location.pathname}#${stepId}`;
+                
+                // Create a temporary modal/tooltip for sharing options
+                const modal = document.createElement('div');
+                modal.className = 'share-modal';
+                modal.innerHTML = `
+                    <div class="share-modal-content">
+                        <h4>Share this step</h4>
+                        <div class="share-options">
+                            <button id="copy-link" class="share-option">
+                                <i class="fas fa-copy"></i> Copy Link
+                            </button>
+                            <a href="sms:?body=Check out this step in the home buying process: ${url}" class="share-option">
+                                <i class="fas fa-sms"></i> Text
+                            </a>
+                            <a href="mailto:?subject=Home Buying Process Step&body=Here's information about this step in the home buying process: ${url}" class="share-option">
+                                <i class="fas fa-envelope"></i> Email
+                            </a>
+                        </div>
+                        <button class="close-modal">Close</button>
+                    </div>
+                `;
+                
+                document.body.appendChild(modal);
+                
+                // Add styles for the modal
+                const style = document.createElement('style');
+                style.textContent = `
+                    .share-modal {
+                        position: fixed;
+                        top: 0;
+                        left: 0;
+                        width: 100%;
+                        height: 100%;
+                        background-color: rgba(0, 0, 0, 0.5);
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        z-index: 1000;
+                    }
+                    .share-modal-content {
+                        background-color: white;
+                        padding: 1.5rem;
+                        border-radius: 12px;
+                        width: 85%;
+                        max-width: 400px;
+                    }
+                    .share-options {
+                        display: flex;
+                        flex-direction: column;
+                        gap: 0.75rem;
+                        margin: 1.25rem 0;
+                    }
+                    .share-option {
+                        display: flex;
+                        align-items: center;
+                        gap: 0.5rem;
+                        padding: 0.75rem;
+                        border-radius: 8px;
+                        background-color: #f1f5f9;
+                        border: none;
+                        text-decoration: none;
+                        color: var(--dark);
+                        font-weight: 600;
+                        cursor: pointer;
+                    }
+                    .close-modal {
+                        width: 100%;
+                        padding: 0.75rem;
+                        background-color: var(--gray);
+                        color: white;
+                        border: none;
+                        border-radius: 8px;
+                        cursor: pointer;
+                    }
+                `;
+                document.head.appendChild(style);
+                
+                // Handle copy link button
+                document.getElementById('copy-link').addEventListener('click', async () => {
+                    try {
+                        await navigator.clipboard.writeText(url);
+                        document.getElementById('copy-link').innerHTML = '<i class="fas fa-check"></i> Copied!';
+                        setTimeout(() => {
+                            document.getElementById('copy-link').innerHTML = '<i class="fas fa-copy"></i> Copy Link';
+                        }, 2000);
+                    } catch (err) {
+                        console.error('Failed to copy: ', err);
+                    }
+                });
+                
+                // Close modal when clicking the close button or outside the modal
+                document.querySelector('.close-modal').addEventListener('click', () => {
+                    document.body.removeChild(modal);
+                });
+                
+                modal.addEventListener('click', (e) => {
+                    if (e.target === modal) {
+                        document.body.removeChild(modal);
+                    }
+                });
             });
         });
     </script>
