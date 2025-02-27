@@ -1,44 +1,61 @@
-- name: Create Submissions Directory
-    run: mkdir -p submissions/pdfs submissions/data
+name: Process Buyer Broker Agreement
 
-  - name: Decode and Save PDF
-    env:
-      PDF_BASE64: ${{ github.event.client_payload.pdf_base64 }}
-      CLIENT_NAME: ${{ github.event.client_payload.client_data.fullName }}
-    run: |
-      # Generate unique filename
-      FILENAME=$(echo "$CLIENT_NAME" | tr ' ' '_' | tr '[:upper:]' '[:lower:]')
-      TIMESTAMP=$(date +"%Y%m%d_%H%M%S")
-      
-      # Save PDF
-      echo "$PDF_BASE64" | base64 --decode > "submissions/pdfs/${FILENAME}_${TIMESTAMP}_agreement.pdf"
+on:
+  workflow_dispatch:
+    inputs:
+      fullName:
+        description: 'Full Name'
+        required: true
+      initials:
+        description: 'Initials'
+        required: true
+      pdfBase64:
+        description: 'PDF Base64 Encoded'
+        required: true
 
-  - name: Create Submission Metadata
-    env:
-      CLIENT_DATA: ${{ toJson(github.event.client_payload.client_data) }}
-      CLIENT_NAME: ${{ github.event.client_payload.client_data.fullName }}
-    run: |
-      # Generate unique filename
-      FILENAME=$(echo "$CLIENT_NAME" | tr ' ' '_' | tr '[:upper:]' '[:lower:]')
-      TIMESTAMP=$(date +"%Y%m%d_%H%M%S")
-      
-      # Create markdown file with submission details
-      cat << EOF > "submissions/data/${FILENAME}_${TIMESTAMP}_submission.md"
-      # Buyer Broker Agreement Submission
+jobs:
+  process-submission:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
 
-      ## Client Details
-      \`\`\`json
-      $CLIENT_DATA
-      \`\`\`
+      - name: Create Submissions Directory
+        run: mkdir -p submissions/pdfs submissions/data
 
-      ## Submission Timestamp
-      $(date -u)
-      EOF
+      - name: Decode and Save PDF
+        env:
+          PDF_BASE64: ${{ github.event.inputs.pdfBase64 }}
+          CLIENT_NAME: ${{ github.event.inputs.fullName }}
+        run: |
+          FILENAME=$(echo "$CLIENT_NAME" | tr ' ' '_' | tr '[:upper:]' '[:lower:]')
+          TIMESTAMP=$(date +"%Y%m%d_%H%M%S")
+          
+          echo "$PDF_BASE64" | base64 --decode > "submissions/pdfs/${FILENAME}_${TIMESTAMP}_agreement.pdf"
 
-  - name: Commit and Push Submission
-    run: |
-      git config user.name "GitHub Actions Bot"
-      git config user.email "<>"
-      git add submissions/
-      git commit -m "Add buyer broker agreement submission"
-      git push
+      - name: Create Submission Metadata
+        env:
+          CLIENT_NAME: ${{ github.event.inputs.fullName }}
+          INITIALS: ${{ github.event.inputs.initials }}
+        run: |
+          FILENAME=$(echo "$CLIENT_NAME" | tr ' ' '_' | tr '[:upper:]' '[:lower:]')
+          TIMESTAMP=$(date +"%Y%m%d_%H%M%S")
+          
+          cat << EOF > "submissions/data/${FILENAME}_${TIMESTAMP}_submission.md"
+          # Buyer Broker Agreement Submission
+
+          ## Client Details
+          - **Full Name:** $CLIENT_NAME
+          - **Initials:** $INITIALS
+
+          ## Submission Timestamp
+          $(date -u)
+          EOF
+
+      - name: Commit and Push Submission
+        run: |
+          git config user.name "GitHub Actions Bot"
+          git config user.email "<>"
+          git add submissions/
+          git commit -m "Add buyer broker agreement for ${{ github.event.inputs.fullName }}"
+          git push
