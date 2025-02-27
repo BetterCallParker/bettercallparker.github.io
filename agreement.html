@@ -1203,7 +1203,8 @@
         
         // Check for success parameter in URL (for FormSubmit.co redirect)
         const urlParams = new URLSearchParams(window.location.search);
-        if (urlParams.get('success') === 'true') {
+        const currentPage = window.location.pathname.split('/').pop();
+        if (urlParams.get('success') === 'true' && currentPage === 'thank-you.html') {
             document.getElementById('thank-you-message').style.display = 'block';
             document.querySelector('.submit-btn').style.display = 'none';
         }
