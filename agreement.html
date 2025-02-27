@@ -365,7 +365,7 @@
 <body>
     <header>
         <div class="logo">BetterCallParker</div>
-        <div>Interactive Buyer Broker Agreement v1.1</div>
+        <div>Interactive Buyer Broker Agreement</div>
     </header>
     
     <main class="container">
@@ -404,7 +404,7 @@
                         <input type="hidden" name="_subject" value="New Buyer Broker Agreement">
                         <input type="hidden" name="_captcha" value="false">
                         <input type="hidden" name="_template" value="table">
-                        <input type="hidden" name="_next" value="https://bettercallparker.com/thank-you">
+                        <input type="hidden" name="_next" value="http://127.0.0.1:5500/thank-you.html">
                         
                         <div class="form-group">
                             <label for="fullName">Full Name:</label>
@@ -463,6 +463,7 @@
                             <p>Your signed Buyer Broker Agreement has been submitted.</p>
                             <p>I'll be in touch with you shortly!</p>
                             <p>A copy of your agreement has been downloaded to your device.</p>
+                            <p class="countdown-text">Redirecting to home page in <span id="countdown">10</span> seconds...</p>
                         </div>
                     </form>
                 </div>
@@ -497,8 +498,13 @@
     </footer>
     
     <script>
-        // PDF.js initialization with CORS configuration
+        // PDF.js initialization with improved font configuration
         pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.worker.min.js';
+        pdfjsLib.GlobalWorkerOptions.useWorkerFetch = true;
+    
+        // Font and CMAP configuration
+        const CMAP_URL = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/cmaps/';
+        const FONT_URL = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/standard_fonts/';
         
         // Variables for PDF rendering
         let pdfDoc = null;
@@ -510,35 +516,34 @@
         let scale = 1.5;
         let helperMode = false;
         
-        // Field positions for your PDF
+        // Field positions for your PDF - UPDATED with your provided coordinates
         // Format: [pageNumber, x, y, width, height]
         let fieldPositions = {
-            'fullName': [1, 116, 210, 250, 25],        // Buyer's name - adjusted y position
-            'signature': [3, 70, 639, 260, 35],        // Signature - adjusted x position and width
-            'startDate': [1, 340, 438, 120, 25],       // Agreement start date
-            'expirationDate': [1, 111, 466, 120, 25],  // Expiration date
-            'signatureDate': [3, 362, 645, 100, 25],   // Signature date
-            'buyerInitials1': [1, 287, 878, 40, 25],   // First initials - adjusted y position
-            'buyerInitials2': [2, 274, 905, 40, 25],   // Second initials - adjusted y position
-            'buyerInitials3': [3, 261, 295, 40, 25]    // Third initials
+            'fullName':       [1, 116, 212, 250, 25],        // Line 1 (Buyer's name)
+            'startDate':      [1, 340, 438, 120, 25],       // Line 9 (Agreement start date)
+            'expirationDate': [1, 111, 466, 120, 25],  // Line 10 (Expiration date)
+            'buyerInitials1': [1, 287, 876, 40, 25],   // Line 27 (Initials)
+            'buyerInitials2': [2, 274, 903, 40, 25],   // Line 76 (Initials)
+            'buyerInitials3': [3, 261, 295, 40, 25],    // Line 95 (Initials)
+            'signature':      [3, 82, 639, 250, 35],        // Line 108 (Signature)
+            'signatureDate':  [3, 362, 645, 100, 25]   // Line 108 (Signature date)
         };
         
-        // Load the PDF with CORS-friendly settings
+        // Load the PDF with improved configuration
         function loadPDF() {
-            // Use your actual PDF path
+            // Use your actual PDF path (make sure this matches your uploaded file name)
             const url = 'buyer-broker-agreement.pdf';
             
-            // Configure PDF.js to disable font loading (prevents CORS issues)
+            // Configure PDF.js with font loading options
             pdfjsLib.getDocument({
                 url: url,
-                // Disable font face to prevent CORS issues
-                disableFontFace: true,
-                // Disable range requests which can also cause CORS issues
-                disableRange: true,
-                // Disable streams to prevent CORS issues
-                disableStream: true,
-                // Ignore corruption in PDFs
-                stopAtErrors: false
+                cMapUrl: CMAP_URL,
+                cMapPacked: true,
+                standardFontDataUrl: FONT_URL,
+                // Silence warnings about missing fonts
+                disableFontFace: false,
+                // Ignore corruption warnings
+                stopAtErrors: false,
             }).promise.then(function(pdf) {
                 pdfDoc = pdf;
                 document.getElementById('page-count').textContent = pdf.numPages;
@@ -556,7 +561,7 @@
             });
         }
         
-        // Render the specified page
+        // Render the specified page with improved error handling
         function renderPage(num) {
             pageRendering = true;
             
@@ -586,23 +591,35 @@
                     
                     // Update form overlay positions
                     updateFormOverlay();
-                }).catch(function(error) {
-                    console.error('Error rendering page:', error);
+                }).catch(function(renderError) {
+                    console.warn('Error rendering page:', renderError);
                     pageRendering = false;
                     
-                    // Draw fallback content for this page
+                    // Try to continue with pending page if there is one
+                    if (pageNumPending !== null) {
+                        renderPage(pageNumPending);
+                        pageNumPending = null;
+                    }
+                    
+                    // Draw fallback content
                     ctx.fillStyle = '#f8f9fa';
                     ctx.fillRect(0, 0, canvas.width, canvas.height);
                     ctx.fillStyle = '#495057';
                     ctx.font = '16px Arial';
-                    ctx.fillText(`Page ${num} rendering issue. Form submission will still work.`, 50, 100);
+                    ctx.fillText(`Page ${num} rendering issue. You can still continue.`, 50, 100);
                     
                     // Still update the overlay
                     updateFormOverlay();
                 });
-            }).catch(function(error) {
-                console.error('Error getting page:', error);
+            }).catch(function(pageError) {
+                console.error('Error getting page:', pageError);
                 pageRendering = false;
+                
+                // Try to continue with pending page if there is one
+                if (pageNumPending !== null) {
+                    renderPage(pageNumPending);
+                    pageNumPending = null;
+                }
             });
             
             // Update page numbers
@@ -750,39 +767,51 @@
                 document.getElementById('signature-data').value = ''; // Clear hidden input
             });
             
-            // Accept signature - UPDATED with visual feedback
+            // Accept signature with visual feedback
             document.getElementById('accept-signature').addEventListener('click', function() {
-                const signatureCanvas = document.getElementById('signature-pad');
                 const signatureData = signatureCanvas.toDataURL();
-                
-                // Update the form overlay
                 updateFormField('signature', signatureData);
+                document.getElementById('signature-data').value = signatureData; // Store in hidden input
                 
-                // Store in hidden input
-                document.getElementById('signature-data').value = signatureData;
+                // Add visual feedback
+                const acceptButton = this;
+                const originalText = acceptButton.innerHTML;
+                const originalBg = acceptButton.style.backgroundColor;
                 
-                // Provide visual feedback
-                this.disabled = true;
-                this.innerHTML = '<i class="fas fa-check"></i> Signature Accepted';
-                this.style.backgroundColor = '#10b981'; // Change to success color
+                // Show confirmation visually
+                acceptButton.innerHTML = '<i class="fas fa-check"></i> Accepted!';
+                acceptButton.style.backgroundColor = '#28a745'; // Success green color
                 
-                // Add a success message below the signature pad
-                const successMsg = document.createElement('div');
-                successMsg.className = 'signature-success';
-                successMsg.innerHTML = '<small style="color: #10b981; font-weight: bold;"><i class="fas fa-check-circle"></i> Signature successfully captured</small>';
+                // Create notification
+                const notification = document.createElement('div');
+                notification.style.position = 'absolute';
+                notification.style.top = '0';
+                notification.style.left = '0';
+                notification.style.right = '0';
+                notification.style.backgroundColor = 'rgba(40, 167, 69, 0.8)';
+                notification.style.color = 'white';
+                notification.style.padding = '8px';
+                notification.style.textAlign = 'center';
+                notification.style.borderRadius = '0 0 4px 4px';
+                notification.style.zIndex = '1000';
+                notification.innerHTML = '<i class="fas fa-check-circle"></i> Signature accepted!';
                 
-                // Check if we already added a success message to avoid duplicates
-                const existingMsg = document.querySelector('.signature-success');
-                if (!existingMsg) {
-                    document.querySelector('.signature-buttons').after(successMsg);
-                }
+                const signatureContainer = document.querySelector('.signature-container');
+                signatureContainer.style.position = 'relative';
+                signatureContainer.appendChild(notification);
                 
-                // Re-enable after 5 seconds so they can try again if needed
-                setTimeout(() => {
-                    this.disabled = false;
-                    this.innerHTML = '<i class="fas fa-check"></i> Accept';
-                    this.style.backgroundColor = '#059669'; // Return to original color
-                }, 5000);
+                // Reset after 2 seconds
+                setTimeout(function() {
+                    acceptButton.innerHTML = originalText;
+                    acceptButton.style.backgroundColor = originalBg;
+                    notification.style.opacity = '0';
+                    notification.style.transition = 'opacity 0.5s';
+                    
+                    // Remove notification after fade out
+                    setTimeout(function() {
+                        signatureContainer.removeChild(notification);
+                    }, 500);
+                }, 2000);
             });
         }
         
@@ -825,7 +854,7 @@
             }
         }
         
-        // Update a specific form field on the overlay - UPDATED with better styling
+        // Update a specific form field on the overlay
         function updateFormField(field, value) {
             const overlayElement = document.getElementById(`overlay-${field}`);
             
@@ -842,24 +871,8 @@
                     img.style.objectFit = 'contain'; // Prevent stretching
                     overlayElement.appendChild(img);
                 }
-            } else if (field.includes('Date')) {
-                // For date fields, apply specific styling
-                overlayElement.style.fontFamily = 'Arial, sans-serif';
-                overlayElement.style.fontSize = '12px';
-                overlayElement.style.fontWeight = 'normal';
-                overlayElement.style.textAlign = 'center';
-                overlayElement.textContent = value;
-            } else if (field.includes('Initials')) {
-                // For initials, apply specific styling
-                overlayElement.style.fontFamily = 'Arial, sans-serif';
-                overlayElement.style.fontSize = '12px';
-                overlayElement.style.fontWeight = 'bold';
-                overlayElement.style.textAlign = 'center';
-                overlayElement.textContent = value;
             } else {
                 // For text fields
-                overlayElement.style.fontFamily = 'Arial, sans-serif';
-                overlayElement.style.fontSize = '12px';
                 overlayElement.textContent = value;
             }
         }
@@ -871,12 +884,29 @@
             updateFormField('buyerInitials3', initials);
         }
         
-        // Function to manually create a new PDF instead of modifying existing one
-        // This avoids the issues with PDF-Lib trying to parse the corrupted PDF
+        // Function to generate the completed PDF with improved error handling
         async function generateCompletedPDF() {
             try {
-                // Create a new PDFDocument from scratch
-                const pdfDoc = await PDFLib.PDFDocument.create();
+                // PDF template URL - make sure this points to your PDF
+                const pdfUrl = 'buyer-broker-agreement.pdf';
+                
+                // Fetch the PDF template
+                const pdfBytes = await fetch(pdfUrl)
+                    .then(res => {
+                        if (!res.ok) {
+                            throw new Error(`HTTP error! Status: ${res.status}`);
+                        }
+                        return res.arrayBuffer();
+                    })
+                    .catch(error => {
+                        console.error('Error fetching PDF template:', error);
+                        throw new Error('Could not load the PDF template. Please try again later.');
+                    });
+                
+                // Load the PDF document using PDF-LIB (with encryption handling)
+                const pdfDoc = await PDFLib.PDFDocument.load(pdfBytes, { 
+                    ignoreEncryption: true 
+                });
                 
                 // Get form values
                 const fullName = document.getElementById('fullName').value;
@@ -885,91 +915,78 @@
                 const expirationDate = document.getElementById('hiddenExpirationDate').value;
                 const signatureData = document.getElementById('signature-data').value;
                 
+                // Get all pages
+                const pages = pdfDoc.getPages();
+                
                 // Add a standard font
                 const helveticaFont = await pdfDoc.embedFont(PDFLib.StandardFonts.Helvetica);
-                const helveticaBold = await pdfDoc.embedFont(PDFLib.StandardFonts.HelveticaBold);
                 
-                // Add three pages (same as original PDF)
-                const page1 = pdfDoc.addPage([612, 792]); // Standard letter size
-                const page2 = pdfDoc.addPage([612, 792]);
-                const page3 = pdfDoc.addPage([612, 792]);
+                // Page 1
+                const page1 = pages[0];
                 
-                // Add title to first page
-                page1.drawText('BUYER BROKER AGREEMENT', {
-                    x: 200,
-                    y: 750,
-                    size: 16,
-                    font: helveticaBold
-                });
-                
-                // Add section for client information
-                page1.drawText('Client Information:', {
-                    x: 50,
-                    y: 700,
-                    size: 12,
-                    font: helveticaBold
-                });
-                
-                page1.drawText('Name: ' + fullName, {
-                    x: 70,
-                    y: 680,
+                // Add full name
+                page1.drawText(fullName, {
+                    x: 116,
+                    y: page1.getHeight() - 212,
                     size: 12,
                     font: helveticaFont
                 });
                 
-                page1.drawText('Agreement Start Date: ' + startDate, {
-                    x: 70,
-                    y: 660,
+                // Add start date
+                page1.drawText(startDate, {
+                    x: 340,
+                    y: page1.getHeight() - 250,
                     size: 12,
                     font: helveticaFont
                 });
                 
-                page1.drawText('Agreement Expiration Date: ' + expirationDate, {
-                    x: 70,
-                    y: 640,
+                // Add expiration date
+                page1.drawText(expirationDate, {
+                    x: 111,
+                    y: page1.getHeight() - 466,
                     size: 12,
                     font: helveticaFont
                 });
                 
-                // Add initials to each page
-                page1.drawText('Client Initials: ' + initials, {
-                    x: 450,
-                    y: 50,
+                // Add initials on page 1
+                page1.drawText(initials, {
+                    x: 287,
+                    y: page1.getHeight() - 876,
                     size: 12,
                     font: helveticaFont
                 });
                 
-                page2.drawText('Client Initials: ' + initials, {
-                    x: 450,
-                    y: 50,
+                // Page 2
+                const page2 = pages[1];
+                
+                // Add initials on page 2
+                page2.drawText(initials, {
+                    x: 274,
+                    y: page2.getHeight() - 903,
                     size: 12,
                     font: helveticaFont
                 });
                 
-                page3.drawText('Client Initials: ' + initials, {
-                    x: 450,
-                    y: 50,
+                // Page 3
+                const page3 = pages[2];
+                
+                // Add initials on page 3
+                page3.drawText(initials, {
+                    x: 261,
+                    y: page3.getHeight() - 295,
                     size: 12,
                     font: helveticaFont
                 });
                 
-                // Add signature section to last page
-                page3.drawText('Client Signature:', {
-                    x: 70,
-                    y: 200,
-                    size: 12,
-                    font: helveticaBold
-                });
-                
-                // Add date near signature
-                page3.drawText('Date: ' + startDate, {
-                    x: 350,
-                    y: 200,
+                // Add signature date on page 3
+                page3.drawText(startDate, {
+                    x: 362,
+                    y: page3.getHeight() - 645,
                     size: 12,
                     font: helveticaFont
                 });
                 
-                // Add signature if provided
+                // Add signature
                 if (signatureData) {
                     try {
                         // Convert signature data URL to image
@@ -977,53 +994,50 @@
                         
                         // Add signature to page 3
                         page3.drawImage(signatureImage, {
-                            x: 70,
-                            y: 150,
-                            width: 200,
-                            height: 40
+                            x: 82,
+                            y: page3.getHeight() - 639 - 35, // Adjust based on your PDF
+                            width: 250,
+                            height: 35
                         });
                     } catch (signatureError) {
                         console.error('Error embedding signature:', signatureError);
                         // Continue without signature if there's an error
-                        page3.drawText('[Signature Error - Please try again]', {
-                            x: 70,
-                            y: 170,
-                            size: 10,
-                            font: helveticaFont
-                        });
                     }
                 }
                 
-                // Add broker information at bottom of last page
-                page3.drawText('BetterCallParker Realty | 520-955-6533 | AaronParkerRealty@gmail.com', {
-                    x: 100,
-                    y: 100,
-                    size: 10,
-                    font: helveticaFont
-                });
-                
-                // Add explanatory text
-                page3.drawText('This is a simplified document based on your inputs.', {
-                    x: 100,
-                    y: 80,
-                    size: 10,
-                    font: helveticaFont
-                });
-                
-                page3.drawText('Please refer to the full agreement for complete terms and conditions.', {
-                    x: 100,
-                    y: 65,
-                    size: 10,
-                    font: helveticaFont
-                });
-                
                 // Save the PDF
-                const pdfBytes = await pdfDoc.save();
-                return pdfBytes;
+                const modifiedPdfBytes = await pdfDoc.save();
+                return modifiedPdfBytes;
             } catch (error) {
                 console.error('Error generating PDF:', error);
                 throw error;
             }
+        }
+        
+        // Function to handle the countdown and redirect
+        function startRedirectCountdown() {
+            console.log("Countdown started"); // Debug line
+            let seconds = 10;
+            const countdownElement = document.getElementById('countdown');
+            
+            if (!countdownElement) {
+                console.error("Countdown element not found");
+                return;
+            }
+            
+            countdownElement.textContent = seconds;
+            
+            const countdownInterval = setInterval(function() {
+                seconds--;
+                console.log("Countdown: " + seconds); // Debug line
+                
+                countdownElement.textContent = seconds;
+                
+                if (seconds <= 0) {
+                    clearInterval(countdownInterval);
+                    window.location.href = 'index.html'; // Make sure this points to your actual home page
+                }
+            }, 1000);
         }
         
         // Initialize everything when the document is loaded
@@ -1062,7 +1076,7 @@
                 });
             });
             
-            // Handle form submission with PDF generation - UPDATED to redirect to thank you page
+            // Handle form submission with PDF generation
             document.getElementById('agreement-form').addEventListener('submit', async function(e) {
                 // Prevent default form submission to validate first
                 e.preventDefault();
@@ -1090,6 +1104,8 @@
                     validationMessage += "• Please confirm you're not working with another agent\n";
                 }
                 
+
+
                 // Check if signature exists and is valid
                 const signatureCanvas = document.getElementById('signature-pad');
                 const signatureData = signatureCanvas.toDataURL();
@@ -1097,10 +1113,12 @@
                 
                 // A valid signature will have more data than an empty canvas
                 const isEmptySignature = signatureData.length < 5000;
-                
+
                 if (isEmptySignature) {
                     validationMessage += "• Please sign the agreement\n";
                 }
+                
+
                 
                 // If there are validation errors, show them and stop form submission
                 if (validationMessage) {
@@ -1142,42 +1160,50 @@
                     // Add the PDF file as an attachment
                     formData.append('agreement_pdf', pdfFile);
                     
-                    // Download the PDF for the user
-                    const downloadUrl = URL.createObjectURL(pdfBlob);
-                    const downloadLink = document.createElement('a');
-                    downloadLink.href = downloadUrl;
-                    downloadLink.download = fileName;
-                    document.body.appendChild(downloadLink);
-                    downloadLink.click();
-                    document.body.removeChild(downloadLink);
-                    URL.revokeObjectURL(downloadUrl);
-                    
-                    // Submit the form in background - don't wait for response
-                    fetch(this.action, {
+                    // Submit the form to FormSubmit.co
+                    const response = await fetch(this.action, {
                         method: 'POST',
                         body: formData
-                    }).catch(error => {
-                        console.error('Form submission error:', error);
-                        // Don't show error to user since we already downloaded the PDF
                     });
                     
-                    // Redirect to thank you page
-                    window.location.href = 'https://bettercallparker.github.io/thank-you';
-                    
-                    // If for some reason redirect doesn't work immediately, show thank you message
-                    this.reset();
-                    submitButton.style.display = 'none';
-                    document.getElementById('thank-you-message').style.display = 'block';
-                    
+                    if (response.ok || response.status === 0) { // FormSubmit sometimes returns status 0
+                        // Download the PDF for the user
+                        const downloadUrl = URL.createObjectURL(pdfBlob);
+                        const downloadLink = document.createElement('a');
+                        downloadLink.href = downloadUrl;
+                        downloadLink.download = fileName;
+                        document.body.appendChild(downloadLink);
+                        downloadLink.click();
+                        document.body.removeChild(downloadLink);
+                        URL.revokeObjectURL(downloadUrl);
+                        
+                        // Show success message
+                        this.reset();
+                        submitButton.style.display = 'none';
+                        document.getElementById('thank-you-message').style.display = 'block';
+                        
+                        // Start the countdown
+                        startRedirectCountdown();
+                    } else {
+                        throw new Error('Form submission failed');
+                    }
                 } catch (error) {
                     console.error('Error processing form:', error);
-                    alert('There was a problem generating your PDF. Please try again.');
+                    alert('There was a problem with your submission. Please try again.');
                     
                     // Re-enable the submit button
                     submitButton.disabled = false;
                     submitButton.innerText = "Submit Signed Agreement";
                 }
             });
+            
+            // Check for success parameter in URL (for FormSubmit.co redirect)
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('success') === 'true') {
+                document.getElementById('thank-you-message').style.display = 'block';
+                document.querySelector('.submit-btn').style.display = 'none';
+                startRedirectCountdown();
+            }
         });
         
         // Handle window resize
@@ -1201,13 +1227,31 @@
             }
         });
         
-        // Check for success parameter in URL (for FormSubmit.co redirect)
-        const urlParams = new URLSearchParams(window.location.search);
-        const currentPage = window.location.pathname.split('/').pop();
-        if (urlParams.get('success') === 'true' && currentPage === 'thank-you.html') {
-            document.getElementById('thank-you-message').style.display = 'block';
-            document.querySelector('.submit-btn').style.display = 'none';
-        }
+        // Backup countdown checker that runs independently (at the end of the script)
+        window.addEventListener('load', function() {
+            // Check periodically if the thank-you message is visible but countdown hasn't started
+            function checkThankYouMessage() {
+                const thankYouMessage = document.getElementById('thank-you-message');
+                const countdownElement = document.getElementById('countdown');
+                
+                if (thankYouMessage && 
+                    (thankYouMessage.style.display === 'block' || 
+                     window.getComputedStyle(thankYouMessage).display === 'block')) {
+                    
+                    // If the countdown element exists but no countdown is running (still showing 10)
+                    if (countdownElement && countdownElement.textContent === '10') {
+                        console.log("Thank you message is visible but countdown hasn't started. Starting it now.");
+                        startRedirectCountdown();
+                    }
+                }
+                
+                // Check again in 2 seconds
+                setTimeout(checkThankYouMessage, 2000);
+            }
+            
+            // Start checking after a short delay
+            setTimeout(checkThankYouMessage, 1000);
+        });
     </script>
 </body>
 </html>
