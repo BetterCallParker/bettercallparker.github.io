@@ -1,0 +1,44 @@
+- name: Create Submissions Directory
+    run: mkdir -p submissions/pdfs submissions/data
+
+  - name: Decode and Save PDF
+    env:
+      PDF_BASE64: ${{ github.event.client_payload.pdf_base64 }}
+      CLIENT_NAME: ${{ github.event.client_payload.client_data.fullName }}
+    run: |
+      # Generate unique filename
+      FILENAME=$(echo "$CLIENT_NAME" | tr ' ' '_' | tr '[:upper:]' '[:lower:]')
+      TIMESTAMP=$(date +"%Y%m%d_%H%M%S")
+      
+      # Save PDF
+      echo "$PDF_BASE64" | base64 --decode > "submissions/pdfs/${FILENAME}_${TIMESTAMP}_agreement.pdf"
+
+  - name: Create Submission Metadata
+    env:
+      CLIENT_DATA: ${{ toJson(github.event.client_payload.client_data) }}
+      CLIENT_NAME: ${{ github.event.client_payload.client_data.fullName }}
+    run: |
+      # Generate unique filename
+      FILENAME=$(echo "$CLIENT_NAME" | tr ' ' '_' | tr '[:upper:]' '[:lower:]')
+      TIMESTAMP=$(date +"%Y%m%d_%H%M%S")
+      
+      # Create markdown file with submission details
+      cat << EOF > "submissions/data/${FILENAME}_${TIMESTAMP}_submission.md"
+      # Buyer Broker Agreement Submission
+
+      ## Client Details
+      \`\`\`json
+      $CLIENT_DATA
+      \`\`\`
+
+      ## Submission Timestamp
+      $(date -u)
+      EOF
+
+  - name: Commit and Push Submission
+    run: |
+      git config user.name "GitHub Actions Bot"
+      git config user.email "<>"
+      git add submissions/
+      git commit -m "Add buyer broker agreement submission"
+      git push
