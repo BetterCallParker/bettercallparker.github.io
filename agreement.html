@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Buyer Broker Agreement - BetterCallParker</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.min.js"></script>
+    <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+    <link rel="stylesheet" href="css/agreement-styles.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">BetterCallParker</div>
+            <div class="tagline">Interactive Buyer Broker Agreement</div>
+        </div>
+    </header>
+    
+    <main class="container">
+        <div class="nar-banner">
+            <h3>All REALTORS® are required to have this agreement signed prior to showing homes</h3>
+            <p>This is a requirement of the <a href="https://www.nar.realtor/competition-in-real-estate" target="_blank">National Association of REALTORS® settlement</a> effective as of August 17, 2024.</p>
+            <p class="explanation">This "Buyer Broker Agreement to Show Property" simply allows me to show you homes. It outlines that I'll be your agent during showings and that I'll work to negotiate my commission with the seller - not you - thanks to my $1 promise.</p>
+        </div>
+        
+        <div class="agreement-section">
+            <h2>Complete Touring Agreement</h2>
+            
+            <div class="disclaimer">
+                <p><i class="fas fa-exclamation-triangle"></i> If you are currently working with another real estate agent, please notify me before proceeding to any showings.</p>
+            </div>
+            
+            <div class="pricing-box">
+                <h3>My $1 Promise</h3>
+                <p>I'm so confident in my ability to negotiate seller-paid commissions that if I can't get the seller to cover my commission, you'll only pay $1 for my services.</p>
+                <p>This promise is my way of building trust with clients like you. My success is tied to your satisfaction, not to extracting fees from you.</p>
+            </div>
+            
+            <div class="instructions">
+                <h3>How to complete this form:</h3>
+                <ol>
+                    <li>Fill in your full name</li>
+                    <li>Enter your initials once (they'll be applied to all required spots)</li>
+                    <li>Draw your signature in the signature pad</li>
+                    <li>Click "Submit Signed Agreement" when complete</li>
+                </ol>
+            </div>
+            
+            <div class="form-container">
+                <div class="form-panel">
+                    <h3>Your Information</h3>
+                    <!-- Form uses FormSubmit.co endpoint -->
+                    <form id="agreement-form" action="https://formsubmit.co/AaronParkerRealty@gmail.com" method="POST">
+                        <!-- FormSubmit.co configuration -->
+                        <input type="hidden" name="_subject" value="New Buyer Broker Agreement">
+                        <input type="hidden" name="_captcha" value="false">
+                        <input type="hidden" name="_template" value="table">
+                        <input type="hidden" name="_next" value="thank-you.html">
+                        
+                        <div class="form-group">
+                            <label for="fullName">Full Name:</label>
+                            <input type="text" id="fullName" name="fullName" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="initials">Your Initials:</label>
+                            <input type="text" id="initials" name="initials" required maxlength="10" placeholder="Type your initials">
+                            <small>Your initials will be applied to all required spots in the document</small>
+                        </div>
+                        
+                        <!-- Hidden fields for form submission -->
+                        <input type="hidden" id="hiddenStartDate" name="startDate">
+                        <input type="hidden" id="hiddenExpirationDate" name="expirationDate">
+                        <input type="hidden" id="signature-data" name="signature">
+                        
+                        <div class="checkbox-group">
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="read" name="read" required>
+                                <label for="read">I have read and understand the Buyer Broker Agreement.</label>
+                            </div>
+                            
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="terms" name="terms" required>
+                                <label for="terms">I agree to the terms outlined in the Buyer Broker Agreement.</label>
+                            </div>
+                        </div>
+                        
+                        <div class="signature-container">
+                            <label for="signature-pad">Sign Here:</label>
+                            <canvas id="signature-pad"></canvas>
+                            <div class="signature-buttons">
+                                <button type="button" id="clear-signature" class="signature-btn clear">
+                                    <i class="fas fa-eraser"></i> Clear
+                                </button>
+                                <button type="button" id="accept-signature" class="signature-btn accept">
+                                    <i class="fas fa-check"></i> Accept
+                                </button>
+                            </div>
+                            <small>Your signature will appear on the agreement</small>
+                        </div>
+                        
+                        <button type="submit" class="submit-btn">
+                            <i class="fas fa-paper-plane"></i> Submit Signed Agreement
+                        </button>
+                        
+                        <!-- Thank you message (hidden initially) -->
+                        <div id="thank-you-message">
+                            <h3><i class="fas fa-check-circle"></i> Thank You!</h3>
+                            <p>Your signed Buyer Broker Agreement has been submitted.</p>
+                            <p>I'll be in touch with you shortly!</p>
+                            <p>A copy of your agreement has been downloaded to your device.</p>
+                            <p class="countdown-text">Redirecting to home page in <span id="countdown">10</span> seconds...</p>
+                        </div>
+                    </form>
+                </div>
+                
+                <div class="pdf-panel">
+                    <h3>Your Agreement</h3>
+                    
+                    <div id="pdf-container">
+                        <canvas id="pdf-canvas"></canvas>
+                        <div id="form-overlay"></div>
+                    </div>
+                    
+                    <div class="pdf-controls">
+                        <div class="pdf-page-info">
+                            Page <span id="page-num">1</span> of <span id="page-count">1</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Position Helper (now visible in debug mode) -->
+            <div class="position-helper" style="display: none;">
+                <h4>Placement Helper</h4>
+                <p>Click anywhere on the PDF to get the coordinates.</p>
+                <p>Use these coordinates to update the field positions in the JavaScript file.</p>
+            </div>
+        </div>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <p>BetterCallParker Realty | 520-955-6533 | AaronParkerRealty@gmail.com</p>
+            <p>&copy; 2025 BetterCallParker. All rights reserved.</p>
+        </div>
+    </footer>
+    
+    <script src="js/agreement-script.js"></script>
+</body>
+</html>

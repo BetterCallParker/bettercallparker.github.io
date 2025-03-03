@@ -1,0 +1,328 @@
+/* Core Styles */
+:root {
+    --primary: #1e40af;
+    --primary-light: #3b82f6;
+    --secondary: #059669;
+    --light: #f8fafc;
+    --dark: #1e293b;
+    --gray: #64748b;
+    --light-gray: #e2e8f0;
+    --success: #10b981;
+    --warning: #f59e0b;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    line-height: 1.6;
+    color: var(--dark);
+    background-color: var(--light);
+    padding-bottom: 70px;
+}
+
+.container {
+    width: 100%;
+    max-width: 1000px;
+    padding: 0 1.25rem;
+    margin: 0 auto;
+}
+
+h1, h2, h3 {
+    margin-bottom: 1rem;
+    font-weight: 700;
+    line-height: 1.2;
+    color: var(--primary);
+}
+
+p {
+    margin-bottom: 1rem;
+}
+
+a {
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Header */
+header {
+    background-color: var(--primary);
+    color: white;
+    padding: 1.5rem 0;
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.logo {
+    font-size: 1.8rem;
+    font-weight: 800;
+    margin-bottom: 0.5rem;
+}
+
+/* NAR Banner */
+.nar-banner {
+    background-color: var(--success);
+    color: white;
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.nar-banner a {
+    color: white;
+    text-decoration: underline;
+}
+
+.nar-banner a:hover {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+/* Disclaimer */
+.disclaimer {
+    background-color: var(--warning);
+    color: var(--dark);
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+    font-weight: 600;
+}
+
+/* Pricing Box */
+.pricing-box {
+    background-color: rgba(5, 150, 105, 0.1);
+    border-left: 4px solid var(--secondary);
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+}
+
+.pricing-box h3 {
+    color: var(--secondary);
+    margin-bottom: 0.5rem;
+}
+
+/* Main content */
+.agreement-section {
+    background-color: white;
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Instructions */
+.instructions {
+    background-color: rgba(59, 130, 246, 0.1);
+    border-left: 4px solid var(--primary);
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+}
+
+.instructions h3 {
+    margin-bottom: 0.5rem;
+}
+
+/* Form container */
+.form-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+@media (min-width: 768px) {
+    .form-container {
+        flex-direction: row;
+    }
+}
+
+/* Form styles */
+.form-panel {
+    flex: 1;
+    background-color: var(--light-gray);
+    border-radius: 8px;
+    padding: 1rem;
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+}
+
+input[type="text"],
+input[type="number"] {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid var(--light-gray);
+    border-radius: 8px;
+    font-size: 1rem;
+    background-color: white;
+}
+
+.checkbox-group {
+    margin: 1rem 0;
+}
+
+.checkbox-item {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 0.75rem;
+}
+
+.checkbox-item input[type="checkbox"] {
+    margin-right: 0.75rem;
+    margin-top: 0.3rem;
+}
+
+small {
+    display: block;
+    margin-top: 0.25rem;
+    color: var(--gray);
+    font-size: 0.8rem;
+}
+
+/* Canvas container for PDF */
+.pdf-panel {
+    flex: 2;
+    background-color: var(--light-gray);
+    border-radius: 8px;
+    padding: 1rem;
+    position: relative;
+}
+
+#pdf-container {
+    width: 100%;
+    overflow: auto;
+    background-color: white;
+    border: 1px solid var(--gray);
+    border-radius: 8px;
+    position: relative;
+}
+
+#pdf-canvas {
+    display: block;
+    margin: 0 auto;
+    border-radius: 4px;
+}
+
+#form-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+}
+
+.overlay-field {
+    position: absolute;
+    background-color: rgba(255, 255, 255, 0.8);
+    border: 2px solid var(--primary-light);
+    border-radius: 4px;
+    padding: 4px;
+    font-family: 'Times New Roman', Times, serif;
+    pointer-events: none;
+}
+
+/* Drawing pad for signature */
+.signature-container {
+    margin-top: 1rem;
+}
+
+#signature-pad {
+    border: 1px solid var(--gray);
+    border-radius: 8px;
+    background-color: white;
+    width: 100%;
+    height: 150px;
+    cursor: crosshair;
+}
+
+.signature-buttons {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+}
+
+.signature-btn {
+    flex: 1;
+    padding: 0.5rem;
+    border: none;
+    border-radius: 4px;
+    background-color: var(--gray);
+    color: white;
+    font-size: 0.9rem;
+    cursor: pointer;
+}
+
+.signature-btn.clear {
+    background-color: var(--gray);
+}
+
+.signature-btn.accept {
+    background-color: var(--secondary);
+}
+
+/* Submit button */
+.submit-btn {
+    display: inline-block;
+    background-color: var(--primary);
+    color: white;
+    padding: 0.8rem 1.5rem;
+    border: none;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    width: 100%;
+    transition: all 0.3s ease;
+    margin-top: 1.5rem;
+}
+
+.submit-btn:hover {
+    background-color: var(--primary-light);
+}
+
+/* Thank you message */
+#thank-you-message {
+    display: none;
+    background-color: var(--success);
+    color: white;
+    padding: 1.5rem;
+    border-radius: 8px;
+    text-align: center;
+    margin-top: 1.5rem;
+}
+
+/* Position Helper */
+.position-helper {
+    background-color: rgba(255, 193, 7, 0.2);
+    border-left: 4px solid #ffc107;
+    padding: 1rem;
+    border-radius: 8px;
+    margin-top: 1.5rem;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    margin-top: 2rem;
+    padding: 1rem;
+    color: var(--gray);
+    font-size: 0.9rem;
+}

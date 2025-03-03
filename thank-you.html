@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thank You - BetterCallParker</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Core Styles */
+        :root {
+            --primary: #1e40af;
+            --primary-light: #3b82f6;
+            --secondary: #059669;
+            --light: #f8fafc;
+            --dark: #1e293b;
+            --gray: #64748b;
+            --light-gray: #e2e8f0;
+            --success: #10b981;
+            --warning: #f59e0b;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background-color: var(--light);
+            padding-bottom: 70px;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 800px;
+            padding: 0 1.25rem;
+            margin: 0 auto;
+            text-align: center;
+        }
+        
+        h1, h2, h3 {
+            margin-bottom: 1rem;
+            font-weight: 700;
+            line-height: 1.2;
+            color: var(--primary);
+        }
+        
+        p {
+            margin-bottom: 1rem;
+        }
+        
+        a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+        }
+        
+        a:hover {
+            text-decoration: underline;
+        }
+        
+        /* Header */
+        header {
+            background-color: var(--primary);
+            color: white;
+            padding: 1.5rem 0;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+        }
+        
+        /* Thank You Box */
+        .thank-you-box {
+            background-color: white;
+            border-radius: 12px;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .thank-you-icon {
+            font-size: 5rem;
+            color: var(--success);
+            margin-bottom: 1.5rem;
+        }
+        
+        .thank-you-title {
+            font-size: 2rem;
+            color: var(--dark);
+            margin-bottom: 1rem;
+        }
+        
+        .redirect-text {
+            background-color: var(--light-gray);
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 2rem 0;
+            font-size: 0.9rem;
+        }
+        
+        .countdown {
+            font-weight: bold;
+            color: var(--primary);
+        }
+        
+        .home-button {
+            display: inline-block;
+            background-color: var(--primary);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 1rem;
+        }
+        
+        .home-button:hover {
+            background-color: var(--primary-light);
+            text-decoration: none;
+        }
+        
+        /* Footer */
+        footer {
+            text-align: center;
+            margin-top: 2rem;
+            padding: 1rem;
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">BetterCallParker</div>
+        <div>Your Agreement Has Been Submitted</div>
+    </header>
+    
+    <main class="container">
+        <div class="thank-you-box">
+            <div class="thank-you-icon">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            
+            <h1 class="thank-you-title">Thank You!</h1>
+            
+            <p>Your Buyer Broker Agreement has been successfully submitted and received.</p>
+            
+            <p>A copy of your agreement has been downloaded to your device for your records.</p>
+            
+            <p>I'll be in touch with you shortly to discuss your home buying journey!</p>
+            
+            <div class="redirect-text">
+                You will be redirected to the homepage in <span id="countdown" class="countdown">5</span> seconds or you can click the button below.
+            </div>
+            
+            <a href="index.html" class="home-button">
+                <i class="fas fa-home"></i> Back to Homepage
+            </a>
+        </div>
+    </main>
+    
+    <footer>
+        <p>BetterCallParker Realty | 520-955-6533 | AaronParkerRealty@gmail.com</p>
+        <p>&copy; 2025 BetterCallParker. All rights reserved.</p>
+    </footer>
+    
+    <script>
+        // Countdown timer for redirect
+        let countdown = 5;
+        const countdownElement = document.getElementById('countdown');
+        
+        // Update the countdown every second
+        const timer = setInterval(function() {
+            countdown--;
+            countdownElement.textContent = countdown;
+            
+            if (countdown <= 0) {
+                clearInterval(timer);
+                window.location.href = 'index.html';
+            }
+        }, 1000);
+    </script>
+</body>
+</html>

@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BetterCallParker Realty</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <div class="container header-content">
+            <div class="header-left">
+                <div class="logo">BetterCallParker</div>
+                
+                <div class="tagline">Your trusted guide in home buying</div>
+            </div>
+            <a href="#contact" class="cta-button">Get Started <i class="fas fa-arrow-right"></i></a>
+        </div>
+        
+    </header>
+    <!-- Main Content Section -->
+    <main class="container">
+        <!-- Personal Introduction Section -->
+        <section id="about-parker">
+            <div class="section-content">
+                <div class="parker-intro">
+                    
+                    <div class="parker-photo">
+                        <img src="assets/parker-photo.png" alt="Parker" />
+                    </div>
+                    <p>SA697629000 - My Home Group</p>
+                    <div class="parker-message">
+                        <h2>Your Journey Starts With Parker</h2>
+                        <p class="parker-tagline">Tucson's Premier Real Estate Agent</p>
+                        <p>I'm committed to making your home buying experience transparent, educational, and stress-free. With my expertise and personalized guidance, you'll navigate Tucson's real estate market with confidence.</p>
+                        <p class="parker-promise"><strong>My $1 promise:</strong> I'm so confident in my ability to negotiate seller-paid commissions that I'll charge you just $1 if I can't get the seller to cover my fees.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="tabs">
+            <div class="tabs">
+                <button class="tab-button active" data-tab="process">
+                    <i class="fas fa-map-signs"></i> Home Buying
+                </button>
+                <button class="tab-button" data-tab="nar">
+                    <i class="fas fa-file-contract"></i> NAR Rules
+                </button>
+                <button class="tab-button" data-tab="promise">
+                    <i class="fas fa-dollar-sign"></i> $1 Promise
+                </button>
+                <!-- <button class="tab-button" data-tab="stories">
+                    <i class="fas fa-heart"></i> Success Stories
+                </button>-->
+            </div>
+            
+            <!-- Process Tab -->
+            <div id="process" class="tab-content active">
+                <div class="section-content">
+                    <h3>Your Path to Homeownership</h3>
+                    <p>I break down the complicated process into simple, manageable steps. Tap the share icon to send any step to your clients.</p>
+                    
+                    <div id="step1" class="process-step">
+                        <div class="step-header">
+                            <span class="step-number">Step 1</span>
+                            <h4>Initial Consultation</h4>
+                            <button class="share-button" data-step="step1" aria-label="Share this step">
+                                <i class="fas fa-share-alt"></i>
+                            </button>
+                        </div>
+                        <p>I'll discuss your needs, preferences, and budget to create your personalized home search plan. This free consultation helps me understand exactly what you're looking for.</p>
+                        <p>During this meeting, we'll also review your financial readiness, potential timeline, and the current Tucson market conditions to set realistic expectations.</p>
+                        
+                        <!-- New buttons for expanded information -->
+                        <div class="step-actions">
+                            <button class="faq-button" data-step="step1-faq">
+                                <i class="fas fa-question-circle"></i> Common Questions
+                            </button>
+                            <a href="steps/consultation.html" class="learn-more-button">
+                                <i class="fas fa-info-circle"></i> Learn More
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <div id="step2" class="process-step">
+                        <div class="step-header">
+                            <span class="step-number">Step 2</span>
+                            <h4>Home Touring Agreement</h4>
+                            <button class="share-button" data-step="step2" aria-label="Share this step">
+                                <i class="fas fa-share-alt"></i>
+                            </button>
+                        </div>
+                        <p>Per the new NAR settlement rules, we'll need to sign a Home Touring Agreement before viewing properties. This document:</p>
+                        <ul class="step-details">
+                            <li>Outlines my responsibilities as your agent</li>
+                            <li>Details how I'll be compensated (with my $1 promise)</li>
+                            <li>Explains what exclusive representation means for you</li>
+                            <li>Sets the terms of our professional relationship</li>
+                        </ul>
+                        <p>I'll walk you through each section and answer all your questions before signing.</p>
+                        <p><a href="agreement.html" class="agreement-link"><i class="fas fa-file-contract"></i> View Sample Touring Agreement</a></p>
+                        
+                        <!-- New buttons for expanded information -->
+                        <div class="step-actions">
+                            <button class="faq-button" data-step="step2-faq">
+                                <i class="fas fa-question-circle"></i> Common Questions
+                            </button>
+                            <a href="steps/agreement.html" class="learn-more-button">
+                                <i class="fas fa-info-circle"></i> Learn More
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <div id="step3" class="process-step">
+                        <div class="step-header">
+                            <span class="step-number">Step 3</span>
+                            <h4>Home Search & Viewings</h4>
+                            <button class="share-button" data-step="step3" aria-label="Share this step">
+                                <i class="fas fa-share-alt"></i>
+                            </button>
+                        </div>
+                        <p>I'll help you find properties that match your criteria and schedule convenient viewings. You'll receive my honest feedback about each property's pros and cons.</p>
+                        <p>I'll provide you with:</p>
+                        <ul class="step-details">
+                            <li>Custom property alerts based on your preferences</li>
+                            <li>Detailed Tucson neighborhood information and school ratings</li>
+                            <li>Comparable sales data to understand fair market value</li>
+                            <li>Identification of potential issues or hidden costs</li>
+                        </ul>
+                        
+                        <!-- New buttons for expanded information -->
+                        <div class="step-actions">
+                            <button class="faq-button" data-step="step3-faq">
+                                <i class="fas fa-question-circle"></i> Common Questions
+                            </button>
+                            <a href="steps/search.html" class="learn-more-button">
+                                <i class="fas fa-info-circle"></i> Learn More
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <div id="step4" class="process-step">
+                        <div class="step-header">
+                            <span class="step-number">Step 4</span>
+                            <h4>Offer & Earnest Money</h4>
+                            <button class="share-button" data-step="step4" aria-label="Share this step">
+                                <i class="fas fa-share-alt"></i>
+                            </button>
+                        </div>
+                        <p>When you find the right home, I'll prepare and submit a competitive offer. This includes:</p>
+                        <ul class="step-details">
+                            <li><strong>Earnest Money Deposit:</strong> This "good faith" deposit (typically 1-2% of purchase price) shows sellers you're serious</li>
+                            <li>The earnest money is submitted with your offer or within 1-3 business days after acceptance</li>
+                            <li>The escrow company will contact you directly to arrange payment, and I'll help coordinate this process</li>
+                            <li>This money becomes part of your down payment if the purchase completes successfully</li>
+                            <li>I'll include contingencies to protect this deposit if issues arise</li>
+                        </ul>
+                        <p>I'll negotiate strongly on your behalf for the best price, terms, and to have the seller cover my commission.</p>
+                        
+                        <!-- New buttons for expanded information -->
+                        <div class="step-actions">
+                            <button class="faq-button" data-step="step4-faq">
+                                <i class="fas fa-question-circle"></i> Common Questions
+                            </button>
+                            <a href="steps/offer.html" class="learn-more-button">
+                                <i class="fas fa-info-circle"></i> Learn More
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <div id="step5" class="process-step">
+                        <div class="step-header">
+                            <span class="step-number">Step 5</span>
+                            <h4>Due Diligence Period</h4>
+                            <button class="share-button" data-step="step5" aria-label="Share this step">
+                                <i class="fas fa-share-alt"></i>
+                            </button>
+                        </div>
+                        <p>After your offer is accepted, we enter the 10-day inspection period:</p>
+                        <ul class="step-details">
+                            <li>I'll help you schedule a comprehensive home inspection</li>
+                            <li>We'll review the inspection report together in detail</li>
+                            <li>If issues are found, I'll draft a repair request listing items you want the seller to address</li>
+                            <li>The seller typically has 3-5 days to respond with one of these options:
+                                <ul>
+                                    <li>Accept all repair requests</li>
+                                    <li>Decline all repair requests</li>
+                                    <li>Agree to some repairs but not others</li>
+                                    <li>Offer a credit instead of completing repairs</li>
+                                </ul>
+                            </li>
+                            <li>If you're satisfied with their response, we proceed with the purchase</li>
+                            <li>If not, you can walk away and <strong>receive your earnest money back</strong> as long as we're still within the due diligence period</li>
+                        </ul>
+                        <p>I'll also schedule any additional specialized inspections if needed (termite, radon, etc.).</p>
+                        
+                        <!-- New buttons for expanded information -->
+                        <div class="step-actions">
+                            <button class="faq-button" data-step="step5-faq">
+                                <i class="fas fa-question-circle"></i> Common Questions
+                            </button>
+                            <a href="steps/inspection.html" class="learn-more-button">
+                                <i class="fas fa-info-circle"></i> Learn More
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <div id="step6" class="process-step">
+                        <div class="step-header">
+                            <span class="step-number">Step 6</span>
+                            <h4>Loan Processing & Appraisal</h4>
+                            <button class="share-button" data-step="step6" aria-label="Share this step">
+                                <i class="fas fa-share-alt"></i>
+                            </button>
+                        </div>
+                        <p>While inspections are happening, your mortgage lender will be processing your loan:</p>
+                        <ul class="step-details">
+                            <li>The lender will order an appraisal to verify the home's value</li>
+                            <li>You'll need to provide additional financial documentation as requested</li>
+                            <li>I'll address any appraisal issues if the home doesn't appraise for the offer price</li>
+                            <li>I'll monitor deadlines and keep you updated throughout this process</li>
+                        </ul>
+                        
+                        <!-- New buttons for expanded information -->
+                        <div class="step-actions">
+                            <button class="faq-button" data-step="step6-faq">
+                                <i class="fas fa-question-circle"></i> Common Questions
+                            </button>
+                            <a href="steps/financing.html" class="learn-more-button">
+                                <i class="fas fa-info-circle"></i> Learn More
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <div id="step7" class="process-step">
+                        <div class="step-header">
+                            <span class="step-number">Step 7</span>
+                            <h4>Final Walkthrough</h4>
+                            <button class="share-button" data-step="step7" aria-label="Share this step">
+                                <i class="fas fa-share-alt"></i>
+                            </button>
+                        </div>
+                        <p>Shortly before closing (usually 24-48 hours), I'll conduct a final walkthrough of the property with you to:</p>
+                        <ul class="step-details">
+                            <li>Verify all agreed-upon repairs have been completed</li>
+                            <li>Confirm the property's condition hasn't changed since your last viewing</li>
+                            <li>Ensure all appliances and systems are functioning properly</li>
+                            <li>Check that the sellers have removed all their belongings (unless otherwise agreed)</li>
+                        </ul>
+                        
+                        <!-- New buttons for expanded information -->
+                        <div class="step-actions">
+                            <button class="faq-button" data-step="step7-faq">
+                                <i class="fas fa-question-circle"></i> Common Questions
+                            </button>
+                            <a href="steps/walkthrough.html" class="learn-more-button">
+                                <i class="fas fa-info-circle"></i> Learn More
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <div id="step8" class="process-step">
+                        <div class="step-header">
+                            <span class="step-number">Step 8</span>
+                            <h4>Closing Day</h4>
+                            <button class="share-button" data-step="step8" aria-label="Share this step">
+                                <i class="fas fa-share-alt"></i>
+                            </button>
+                        </div>
+                        <p>The big day has arrived! Here's what to expect:</p>
+                        <ul class="step-details">
+                            <li>You'll sign numerous documents at the title company or attorney's office</li>
+                            <li>I'll attend with you to answer any last-minute questions</li>
+                            <li>You'll need to bring a valid photo ID and certified funds for closing costs</li>
+                            <li>Once all paperwork is complete and funds have been transferred, you'll receive the keys to your new home!</li>
+                        </ul>
+                        <p>My support doesn't end at closing - I'm here to help with any questions even after you've moved in.</p>
+                        
+                        <!-- New buttons for expanded information -->
+                        <div class="step-actions">
+                            <button class="faq-button" data-step="step8-faq">
+                                <i class="fas fa-question-circle"></i> Common Questions
+                            </button>
+                            <a href="steps/closing.html" class="learn-more-button">
+                                <i class="fas fa-info-circle"></i> Learn More
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- NAR Rules Tab -->
+            <div id="nar" class="tab-content">
+                <div class="section-content">
+                    <h3>New NAR Rules Explained Simply</h3>
+                    
+                    <div class="alert">
+                        <h4 class="alert-title">Why Things Are Changing</h4>
+                        <p>Following the recent National Association of Realtors (NAR) lawsuit settlement, there are new requirements for buyer broker agreements. These changes are designed to increase transparency in real estate transactions.</p>
+                    </div>
+                    
+                    <h4>What This Means For You:</h4>
+                    
+                    <div class="features">
+                        <div class="feature-card">
+                            <h5 class="feature-title">Written Agreements</h5>
+                            <p>You'll now sign a formal agreement before I show you homes. This protects your interests and clearly outlines my responsibilities.</p>
+                        </div>
+                        
+                        <div class="feature-card">
+                            <h5 class="feature-title">Fee Transparency</h5>
+                            <p>All potential costs will be disclosed upfront. You'll know exactly what to expect with no hidden surprises.</p>
+                        </div>
+                        
+                        <div class="feature-card">
+                            <h5 class="feature-title">Negotiable Fees</h5>
+                            <p>Commission rates are fully negotiable, giving you more control over what you pay for services.</p>
+                        </div>
+                    </div>
+                    
+                    <h4>My Commitment to You:</h4>
+                    <p>As your agent, I embrace these changes as an opportunity to demonstrate my value. I'll:</p>
+                    <ul class="steps-list">
+                        <li>
+                            <div class="step-icon">✓</div>
+                            <p>Explain everything in plain language, not legal jargon</p>
+                        </li>
+                        <li>
+                            <div class="step-icon">✓</div>
+                            <p>Take time to answer all your questions until you're comfortable</p>
+                        </li>
+                        <li>
+                            <div class="step-icon">✓</div>
+                            <p>Show you exactly how I earn my commission through excellent service</p>
+                        </li>
+                        <li>
+                            <div class="step-icon">✓</div>
+                            <p>Work to have the seller cover my commission whenever possible</p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Promise Tab -->
+            <div id="promise" class="tab-content">
+                <div class="section-content">
+                    <h3>My Confidence Guarantee</h3>
+                    
+                    <div class="promise-box">
+                        <h4 class="promise-title">The $1 Promise</h4>
+                        <p>I'm so confident in my negotiation skills that I'll charge you just $1 for my services if I can't get the seller to cover my commission.</p>
+                        <p>This isn't a gimmick—it's my way of proving I'm truly working for your best interests.</p>
+                    </div>
+                    
+                    <h4>How It Works:</h4>
+                    <ul class="steps-list">
+                        <li>
+                            <div class="step-icon">1</div>
+                            <p>I'll discuss my standard commission structure during our initial consultation</p>
+                        </li>
+                        <li>
+                            <div class="step-icon">2</div>
+                            <p>For properties you're interested in, I'll strategize how to get the seller to cover my commission</p>
+                        </li>
+                        <li>
+                            <div class="step-icon">3</div>
+                            <p>I'll use my proven negotiation techniques to include my commission in the seller's closing costs</p>
+                        </li>
+                        <li>
+                            <div class="step-icon">4</div>
+                            <p>If I fail to get the seller to cover my commission, you'll pay just $1 for my services</p>
+                        </li>
+                    </ul>
+                    
+                    <p><strong>Why do I offer this?</strong> Because I want you to know I'm on your side. My success depends on your satisfaction and referrals, not on extracting fees from you.</p>
+                </div>
+            </div>
+            
+            <!-- Stories Tab -->
+            <div id="stories" class="tab-content">
+                <div class="section-content">
+                    <h3>Client Success Stories</h3>
+                    <p>Don't just take my word for it. Here's what my clients have to say:</p>
+                    
+                    <div class="testimonials">
+                        <div class="testimonial">
+                            <p class="testimonial-text">Parker made buying our first home so much easier than we expected. The way he explained the new buyer broker agreement made us feel confident we were in good hands.</p>
+                            <span class="testimonial-author">— Jamie & Chris, First-time Buyers in Tucson</span>
+                        </div>
+                        
+                        <div class="testimonial">
+                            <p class="testimonial-text">I was nervous about the new NAR rules I'd been hearing about, but Parker broke everything down into simple terms. And yes, he got the seller to pay his commission!</p>
+                            <span class="testimonial-author">— Sophia M., Oro Valley</span>
+                        </div>
+                        
+                        <div class="testimonial">
+                            <p class="testimonial-text">As a single parent, I was concerned about additional costs. Parker's $1 promise gave me confidence, and he delivered by negotiating for the seller to cover his commission.</p>
+                            <span class="testimonial-author">— Michael T., Downtown Tucson</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Contact Section -->
+        <section id="contact">
+            <div class="section-content">
+                <h3 class="section-title">Ready to Get Started?</h3>
+                <p class="text-center">Take the first step toward finding your dream home in Tucson with my expert guidance every step of the way.</p>
+                
+                <div style="text-align: center; margin: 2rem 0;">
+                    <a href="tel:1234567890" class="cta-button" style="background-color: var(--primary); color: white;">
+                        <i class="fas fa-phone"></i> Call Parker Now
+                    </a>
+                </div>
+                
+                <p style="text-align: center; font-size: 0.9rem;">
+                    Or email me at <a href="mailto:parker@bettercallparker.com" style="color: var(--primary); font-weight: 600;">parker@bettercallparker.com</a>
+                </p>
+
+                <p style="text-align: center; font-size: 0.9rem;">SA697629000 - My Home Group</p>
+                <p style="text-align: center; font-size: 0.9rem;">2910 N Swan Rd Suite 204 Tucson, AZ 85712</p>
+                <!-- Add this where you want the link to appear -->
+                <div style="text-align: center; margin: 1rem 0;">
+                    <a href="agreement.html" class="cta-button">
+                        <i class="fas fa-file-contract"></i> View Buyer Agreement
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <!-- Footer Navigation -->
+    <footer>
+        <div class="footer-nav">
+            <a href="#intro">
+                <i class="fas fa-home"></i>
+                <span>Home</span>
+            </a>
+            <a href="#process">
+                <i class="fas fa-map-signs"></i>
+                <span>Steps</span>
+            </a>
+            <a href="tel:1234567890">
+                <i class="fas fa-phone"></i>
+                <span>Call</span>
+            </a>
+            <a href="#contact">
+                <i class="fas fa-envelope"></i>
+                <span>Contact</span>
+            </a>
+        </div>
+    </footer>
+    
+    <!-- FAQ Modal Template (Hidden by default) -->
+    <div id="faq-modal-template" style="display: none;">
+        <div class="faq-modal-content">
+            <h3 class="faq-title">Frequently Asked Questions</h3>
+            <div class="faq-content">
+                <!-- Dynamic content will be inserted here -->
+            </div>
+            <button class="close-modal">Close</button>
+        </div>
+    </div>
+    
+    <script src="js/script.js"></script>
+</body>
+</html>
