@@ -1,0 +1,306 @@
+/* Learn More Pages Styling */
+.breadcrumb {
+    display: flex;
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+}
+
+.breadcrumb a {
+    color: var(--primary);
+    text-decoration: none;
+}
+
+.breadcrumb span {
+    margin: 0 0.5rem;
+    color: var(--gray);
+}
+
+.page-title {
+    color: var(--primary);
+    margin-bottom: 1.5rem;
+    border-bottom: 2px solid var(--light-gray);
+    padding-bottom: 0.5rem;
+}
+
+.section-subtitle {
+    color: var(--secondary);
+    margin: 1.5rem 0 1rem;
+}
+
+.info-card {
+    background-color: rgba(59, 130, 246, 0.1);
+    border-radius: 10px;
+    padding: 1.25rem;
+    margin: 1.5rem 0;
+    border-left: 4px solid var(--primary);
+}
+
+.tip-box {
+    background-color: rgba(5, 150, 105, 0.1);
+    border-radius: 10px;
+    padding: 1.25rem;
+    margin: 1.5rem 0;
+    border-left: 4px solid var(--secondary);
+}
+
+.tip-title {
+    color: var(--secondary);
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.resource-list {
+    margin: 1rem 0;
+}
+
+.resource-list li {
+    margin-bottom: 0.75rem;
+}
+
+.next-prev-nav {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 2px solid var(--light-gray);
+}
+
+.nav-link {
+    display: inline-flex;
+    align-items: center;
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.nav-link:hover {
+    text-decoration: underline;
+}
+
+.prev-link i {
+    margin-right: 0.5rem;
+}
+
+.next-link i {
+    margin-left: 0.5rem;
+}
+
+.back-to-top {
+    display: flex;
+    justify-content: center;
+    margin-top: 2rem;
+}
+
+.image-container {
+    margin: 1.5rem 0;
+    text-align: center;
+}
+
+.image-container img {
+    max-width: 100%;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.image-caption {
+    font-size: 0.9rem;
+    color: var(--gray);
+    margin-top: 0.5rem;
+}
+
+/* FAQ styling */
+.faq-item {
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid var(--light-gray);
+    padding-bottom: 1.5rem;
+}
+
+.faq-item:last-child {
+    border-bottom: none;
+}
+
+.faq-question {
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 0.5rem;
+}
+
+/* Table styling */
+.comparison-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1.5rem 0;
+}
+
+.comparison-table th, .comparison-table td {
+    padding: 0.75rem;
+    border: 1px solid var(--light-gray);
+}
+
+.comparison-table th {
+    background-color: var(--primary);
+    color: white;
+    text-align: left;
+}
+
+.comparison-table tr:nth-child(even) {
+    background-color: rgba(59, 130, 246, 0.05);
+}
+
+.key-point {
+    font-weight: 700;
+    color: var(--primary);
+}
+
+/* Alert box */
+.alert-box {
+    background-color: rgba(250, 204, 21, 0.2);
+    border-left: 4px solid #facc15;
+    padding: 1.25rem;
+    border-radius: 8px;
+    margin: 1.5rem 0;
+}
+
+.alert-title {
+    color: #92400e;
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* Checklist styling */
+.checklist {
+    list-style: none;
+    margin: 1rem 0;
+    padding: 0;
+}
+
+.checklist li {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 0.75rem;
+}
+
+.checklist li i {
+    color: var(--secondary);
+    margin-right: 0.5rem;
+    margin-top: 0.25rem;
+    flex-shrink: 0;
+}
+
+/* Timeline styling */
+.timeline {
+    margin: 2rem 0;
+    position: relative;
+}
+
+.timeline::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 8px;
+    height: 100%;
+    width: 2px;
+    background-color: var(--light-gray);
+}
+
+.timeline-item {
+    position: relative;
+    padding-left: 30px;
+    margin-bottom: 1.5rem;
+}
+
+.timeline-marker {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background-color: var(--primary);
+}
+
+.timeline-title {
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+/* Process Steps */
+.process-steps {
+    counter-reset: step;
+    margin: 2rem 0;
+}
+
+.process-steps .step {
+    position: relative;
+    padding-left: 3rem;
+    margin-bottom: 2rem;
+}
+
+.process-steps .step::before {
+    counter-increment: step;
+    content: counter(step);
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 2rem;
+    height: 2rem;
+    background-color: var(--primary);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+}
+
+.process-steps .step-title {
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 0.5rem;
+}
+
+/* Two-column layout */
+.two-column {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    margin: 1.5rem 0;
+}
+
+@media (min-width: 768px) {
+    .two-column {
+        flex-direction: row;
+    }
+    
+    .two-column > div {
+        flex: 1;
+    }
+}
+
+/* Cost breakdown */
+.cost-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid var(--light-gray);
+}
+
+.cost-item:last-child {
+    border-bottom: none;
+    font-weight: 700;
+}
+
+.cost-category {
+    font-weight: 600;
+}
+
+/* Document section */
+.document-icon {
+    font-size: 2rem;
+    color: var(--primary);
+    margin-bottom: 0.5rem;
+}

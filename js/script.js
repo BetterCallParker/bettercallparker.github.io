@@ -135,7 +135,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 answer: "Simply send me the listing and I'll schedule a viewing as soon as possible. I'm very responsive to these requests."
             },
             {
-                question: "Will you help me evaluate properties?",
+                question: "Will you point out potential problems with a house?",
                 answer: "I'll share market information, comparable sales data, and neighborhood insights to help guide your decision-making process. For property condition assessment, I'll recommend professional home inspectors who are licensed to identify and evaluate potential issues. My role is to help you make informed decisions by providing real estate expertise, while ensuring you have access to qualified professionals for technical evaluations."
             }
         ],

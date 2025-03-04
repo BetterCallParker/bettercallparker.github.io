@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mortgage Pre-Approval Checklist | BetterCallParker Realty</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Open+Sans:wght@400;600&display=swap');
+        
+        :root {
+            --primary: #1e40af;
+            --primary-light: #3b82f6;
+            --secondary: #059669;
+            --light: #f8fafc;
+            --dark: #1e293b;
+            --gray: #64748b;
+            --light-gray: #e2e8f0;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Open Sans', sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background-color: var(--light);
+            padding: 0;
+            margin: 0;
+        }
+        
+        .container {
+            max-width: 8.5in;
+            margin: 0 auto;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        header {
+            padding: 2rem;
+            background-color: var(--primary);
+            color: white;
+            text-align: center;
+            position: relative;
+        }
+        
+        .logo-placeholder {
+            position: absolute;
+            top: 2rem;
+            left: 2rem;
+            background-color: rgba(255, 255, 255, 0.2);
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 0.8rem;
+            color: white;
+        }
+        
+        h1, h2, h3, h4, h5 {
+            font-family: 'Montserrat', sans-serif;
+            line-height: 1.2;
+        }
+        
+        h1 {
+            font-size: 2.2rem;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+        
+        h2 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 2rem;
+        }
+        
+        .content {
+            padding: 2rem;
+        }
+        
+        .intro {
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background-color: var(--light);
+            border-left: 4px solid var(--primary);
+            border-radius: 5px;
+        }
+        
+        .section {
+            margin-bottom: 2.5rem;
+        }
+        
+        .section h3 {
+            color: var(--primary);
+            font-size: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--light-gray);
+            margin-bottom: 1.5rem;
+        }
+        
+        .subsection {
+            margin-bottom: 1.5rem;
+        }
+        
+        .subsection h4 {
+            color: var(--secondary);
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+        }
+        
+        ul {
+            padding-left: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .checkbox-list {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .checkbox-list li {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 0.75rem;
+        }
+        
+        .checkbox {
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--primary);
+            border-radius: 3px;
+            margin-right: 10px;
+            flex-shrink: 0;
+            position: relative;
+            top: 2px;
+        }
+        
+        .checkbox.nested {
+            margin-left: 30px;
+        }
+        
+        .tips {
+            background-color: rgba(5, 150, 105, 0.1);
+            padding: 1.5rem;
+            border-radius: 5px;
+            border-left: 4px solid var(--secondary);
+            margin-bottom: 2rem;
+        }
+        
+        .tips h4 {
+            color: var(--secondary);
+            margin-bottom: 1rem;
+        }
+        
+        .tips-list {
+            padding-left: 1.5rem;
+        }
+        
+        .tips-list li {
+            margin-bottom: 0.75rem;
+        }
+        
+        .comparison {
+            margin-bottom: 2rem;
+        }
+        
+        .comparison-item {
+            margin-bottom: 1rem;
+        }
+        
+        .comparison-title {
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 0.25rem;
+        }
+        
+        .lenders {
+            margin-bottom: 2rem;
+        }
+        
+        .lender {
+            margin-bottom: 1rem;
+        }
+        
+        .lender-name {
+            font-weight: 700;
+        }
+        
+        .assistance-programs {
+            margin-bottom: 2rem;
+        }
+        
+        .program {
+            margin-bottom: 1.5rem;
+        }
+        
+        .program-name {
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 0.25rem;
+        }
+        
+        .footer {
+            text-align: center;
+            padding: 1.5rem;
+            background-color: var(--light);
+            border-top: 1px solid var(--light-gray);
+        }
+        
+        .contact {
+            margin-top: 1rem;
+            font-size: 0.9rem;
+        }
+        
+        .disclaimer {
+            margin-top: 2rem;
+            font-size: 0.8rem;
+            font-style: italic;
+            color: var(--gray);
+        }
+        
+        .page-break {
+            page-break-after: always;
+        }
+        
+        @media print {
+            body {
+                background-color: white;
+            }
+            
+            .container {
+                box-shadow: none;
+                max-width: none;
+            }
+            
+            .no-print {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo-placeholder">Your Logo Here</div>
+            <h1>MORTGAGE PRE-APPROVAL CHECKLIST</h1>
+            <h2>Documentation You'll Need for the Home Loan Process</h2>
+        </header>
+        
+        <div class="content">
+            <div class="intro">
+                <p><strong>Prepared by: BetterCallParker Realty</strong><br>
+                SA697629000 - My Home Group<br>
+                2910 N Swan Rd Suite 204, Tucson, AZ 85712</p>
+                <p style="margin-top: 1rem;"><em>DISCLAIMER: This checklist is for informational purposes only and is not intended to provide financial or legal advice. Requirements may vary by lender and loan type. This document is not affiliated with any specific mortgage lender or financial institution. For accurate and personalized information, please consult directly with your chosen lender.</em></p>
+            </div>
+            
+            <div class="section">
+                <h3>WHY GET PRE-APPROVED?</h3>
+                <p>Getting pre-approved for a mortgage is a crucial first step in your home buying journey. Pre-approval:</p>
+                <ul>
+                    <li>Shows sellers you're a serious and qualified buyer</li>
+                    <li>Gives you a clear picture of your budget and price range</li>
+                    <li>Identifies potential credit issues early in the process</li>
+                    <li>Streamlines the buying process once you find a home</li>
+                    <li>Strengthens your negotiating position in competitive markets</li>
+                </ul>
+                <p>In today's competitive Tucson market, having a pre-approval letter is essential before beginning your home search.</p>
+            </div>
+            
+            <div class="section">
+                <h3>BASIC DOCUMENTS (REQUIRED BY ALL LENDERS)</h3>
+                
+                <div class="subsection">
+                    <h4>Identification</h4>
+                    <ul class="checkbox-list">
+                        <li><div class="checkbox"></div> Valid government-issued photo ID (driver's license, passport)</li>
+                        <li><div class="checkbox"></div> Social Security card or number</li>
+                        <li><div class="checkbox"></div> For non-U.S. citizens: Green card or visa documentation</li>
+                    </ul>
+                </div>
+                
+                <div class="subsection">
+                    <h4>Income Verification</h4>
+                    <ul class="checkbox-list">
+                        <li><div class="checkbox"></div> W-2 forms from all employers for the past two years</li>
+                        <li><div class="checkbox"></div> Pay stubs from the last 30 days showing year-to-date income</li>
+                        <li><div class="checkbox"></div> Federal tax returns (all schedules) for the past two years</li>
+                        <li><div class="checkbox"></div> If self-employed or earning significant income from commissions or bonuses:</li>
+                        <li><div class="checkbox nested"></div> Business tax returns for the past two years (if applicable)</li>
+                        <li><div class="checkbox nested"></div> Profit and loss statement (year-to-date)</li>
+                        <li><div class="checkbox nested"></div> 1099 forms for the past two years</li>
+                    </ul>
+                </div>
+                
+                <div class="subsection">
+                    <h4>Assets Documentation</h4>
+                    <ul class="checkbox-list">
+                        <li><div class="checkbox"></div> Bank statements for checking and savings accounts (last 2 months, all pages)</li>
+                        <li><div class="checkbox"></div> Investment account statements (last 2 months, all pages)
+                            <ul style="list-style-type: none; padding-left: 0; margin-top: 0.5rem;">
+                                <li>- Retirement accounts (401(k), IRA, pension)</li>
+                                <li>- Brokerage accounts</li>
+                                <li>- Certificates of deposit</li>
+                            </ul>
+                        </li>
+                        <li><div class="checkbox"></div> Documentation for any other significant assets</li>
+                        <li><div class="checkbox"></div> Source documentation for any large deposits</li>
+                        <li><div class="checkbox"></div> Gift letter (if receiving down payment assistance from a family member)</li>
+                    </ul>
+                </div>
+                
+                <div class="subsection">
+                    <h4>Debt Information</h4>
+                    <ul class="checkbox-list">
+                        <li><div class="checkbox"></div> List of all current debts and obligations with:
+                            <ul style="list-style-type: none; padding-left: 0; margin-top: 0.5rem;">
+                                <li>- Creditor names</li>
+                                <li>- Account numbers</li>
+                                <li>- Monthly payment amounts</li>
+                                <li>- Current balances</li>
+                                <li>- Payoff amounts (if paying off any debts before closing)</li>
+                            </ul>
+                        </li>
+                        <li><div class="checkbox"></div> Explanation letter for any recent credit inquiries</li>
+                    </ul>
+                </div>
+                
+                <div class="subsection">
+                    <h4>Residence History</h4>
+                    <ul class="checkbox-list">
+                        <li><div class="checkbox"></div> Addresses for the past two years with:
+                            <ul style="list-style-type: none; padding-left: 0; margin-top: 0.5rem;">
+                                <li>- Dates of residency</li>
+                                <li>- Monthly rent or mortgage payment amounts</li>
+                                <li>- Landlord contact information (if renting)</li>
+                            </ul>
+                        </li>
+                        <li><div class="checkbox"></div> If currently own a home:
+                            <ul style="list-style-type: none; padding-left: 0; margin-top: 0.5rem;">
+                                <li>- Mortgage statement showing current balance and payment</li>
+                                <li>- Homeowners insurance policy</li>
+                                <li>- Property tax statements</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="page-break"></div>
+            
+            <div class="section">
+                <h3>ADDITIONAL DOCUMENTS (MAY BE REQUIRED)</h3>
+                
+                <div class="subsection">
+                    <h4>For VA Loans</h4>
+                    <ul class="checkbox-list">
+                        <li><div class="checkbox"></div> Certificate of Eligibility (COE)</li>
+                        <li><div class="checkbox"></div> DD-214 for veterans</li>
+                        <li><div class="checkbox"></div> Statement of service for active duty</li>
+                    </ul>
+                </div>
+                
+                <div class="subsection">
+                    <h4>For Self-Employed Borrowers</h4>
+                    <ul class="checkbox-list">
+                        <li><div class="checkbox"></div> Business license</li>
+                        <li><div class="checkbox"></div> Letter from CPA verifying business existence and your income</li>
+                        <li><div class="checkbox"></div> Business bank statements (last 2-3 months)</li>
+                        <li><div class="checkbox"></div> Year-to-date profit and loss statement</li>
+                    </ul>
+                </div>
+                
+                <div class="subsection">
+                    <h4>For Other Income Sources</h4>
+                    <ul class="checkbox-list">
+                        <li><div class="checkbox"></div> Divorce decree/separation agreement (if receiving or paying alimony/child support)</li>
+                        <li><div class="checkbox"></div> Documentation for Social Security, disability, or pension income</li>
+                        <li><div class="checkbox"></div> Rental property income documentation (tax returns, current leases)</li>
+                    </ul>
+                </div>
+                
+                <div class="subsection">
+                    <h4>For Non-Traditional Credit</h4>
+                    <ul class="checkbox-list">
+                        <li><div class="checkbox"></div> Proof of on-time payments not typically reported to credit bureaus:
+                            <ul style="list-style-type: none; padding-left: 0; margin-top: 0.5rem;">
+                                <li>- Utility bills</li>
+                                <li>- Rent payments</li>
+                                <li>- Insurance payments</li>
+                                <li>- Cell phone bills</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="subsection">
+                    <h4>Special Situations</h4>
+                    <ul class="checkbox-list">
+                        <li><div class="checkbox"></div> Bankruptcy discharge paperwork (if applicable)</li>
+                        <li><div class="checkbox"></div> Foreclosure, short sale, or loan modification documentation (if applicable)</li>
+                        <li><div class="checkbox"></div> Explanation letter for any credit issues or special circumstances</li>
+                        <li><div class="checkbox"></div> Documentation supporting source of down payment</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h3>DOCUMENTS NEEDED AFTER FINDING A HOME</h3>
+                <ul class="checkbox-list">
+                    <li><div class="checkbox"></div> Fully executed purchase contract</li>
+                    <li><div class="checkbox"></div> Earnest money deposit receipt</li>
+                    <li><div class="checkbox"></div> Contact information for homeowners insurance agent</li>
+                    <li><div class="checkbox"></div> HOA information (if applicable)</li>
+                    <li><div class="checkbox"></div> Home inspection report (when completed)</li>
+                    <li><div class="checkbox"></div> Condominium or PUD questionnaire (if applicable)</li>
+                </ul>
+            </div>
+            
+            <div class="section">
+                <h3>TIPS FOR A SMOOTH PRE-APPROVAL PROCESS</h3>
+                <div class="tips">
+                    <ol class="tips-list">
+                        <li><strong>Organize documents in advance</strong><br>
+                            Create digital copies of all documents and organize them in clearly labeled folders.</li>
+                        <li><strong>Respond promptly to lender requests</strong><br>
+                            Additional documentation may be requested during the process. Quick responses keep things moving.</li>
+                        <li><strong>Avoid major financial changes</strong><br>
+                            During the pre-approval and home buying process, avoid:
+                            <ul style="margin-top: 0.5rem;">
+                                <li>Opening new credit accounts</li>
+                                <li>Making large purchases</li>
+                                <li>Changing jobs</li>
+                                <li>Making large deposits without documentation</li>
+                                <li>Closing credit accounts</li>
+                                <li>Co-signing loans for others</li>
+                            </ul>
+                        </li>
+                        <li><strong>Check your credit report</strong><br>
+                            Review your credit report from all three bureaus before applying and address any errors.</li>
+                        <li><strong>Maintain consistency</strong><br>
+                            Use the same name format on all applications and documents.</li>
+                        <li><strong>Compare multiple lenders</strong><br>
+                            Shop around with 3-4 lenders within a 14-day period for the best rates without multiple hits to your credit score.</li>
+                    </ol>
+                </div>
+            </div>
+            
+            <div class="page-break"></div>
+            
+            <div class="section">
+                <h3>UNDERSTANDING PRE-QUALIFICATION VS. PRE-APPROVAL</h3>
+                <div class="comparison">
+                    <div class="comparison-item">
+                        <div class="comparison-title">Pre-qualification:</div>
+                        <ul>
+                            <li>Quick, informal review of your financial situation</li>
+                            <li>Often based on self-reported information</li>
+                            <li>No formal verification of documents</li>
+                            <li>Less valuable to sellers</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="comparison-item">
+                        <div class="comparison-title">Pre-approval:</div>
+                        <ul>
+                            <li>Thorough verification of financial documentation</li>
+                            <li>Credit check and detailed analysis</li>
+                            <li>Stronger indication of loan eligibility</li>
+                            <li>Much more valuable in the home buying process</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <p><strong>Always seek pre-approval rather than just pre-qualification.</strong></p>
+            </div>
+            
+            <div class="section">
+                <h3>RECOMMENDED ARIZONA LENDERS</h3>
+                <p><em>Below are lenders I've worked with who have consistently provided excellent service to my clients. This is not an exhaustive list, and I do not receive any compensation for these recommendations.</em></p>
+                
+                <div class="lenders">
+                    <p><strong>Local Lenders</strong></p>
+                    <div class="lender">
+                        <div class="lender-name">[Local Lender Name]</div>
+                        <div>[Contact Information]</div>
+                        <div>Specializes in: [Conventional, FHA, VA, etc.]</div>
+                    </div>
+                    
+                    <div class="lender">
+                        <div class="lender-name">[Local Lender Name]</div>
+                        <div>[Contact Information]</div>
+                        <div>Specializes in: [Conventional, FHA, VA, etc.]</div>
+                    </div>
+                    
+                    <p style="margin-top: 1.5rem;"><strong>Down Payment Assistance Program Experts</strong></p>
+                    <div class="lender">
+                        <div class="lender-name">[Lender Name]</div>
+                        <div>[Contact Information]</div>
+                        <div>Expert in: [Home Plus, Pathway to Purchase, etc.]</div>
+                    </div>
+                    
+                    <p style="margin-top: 1.5rem;"><strong>Digital/Online Options</strong></p>
+                    <div class="lender">
+                        <div class="lender-name">[Online Lender Name]</div>
+                        <div>[Contact Information]</div>
+                        <div>Known for: [Fast closings, competitive rates, etc.]</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h3>ARIZONA DOWN PAYMENT ASSISTANCE PROGRAMS</h3>
+                <p>Arizona offers several programs to help qualified buyers with down payment and closing costs:</p>
+                
+                <div class="assistance-programs">
+                    <div class="program">
+                        <div class="program-name">1. Home Plus Program</div>
+                        <ul>
+                            <li>Up to 5% of loan amount for down payment/closing costs</li>
+                            <li>Income limits apply (varies by county)</li>
+                            <li>Must complete homebuyer education course</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="program">
+                        <div class="program-name">2. Pathway to Purchase (P2P)</div>
+                        <ul>
+                            <li>Available in specific Arizona cities including parts of Tucson</li>
+                            <li>Down payment assistance up to 10% of purchase price</li>
+                            <li>Must be owner-occupied primary residence</li>
+                            <li>Income restrictions apply</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="program">
+                        <div class="program-name">3. Pima Tucson Homebuyer's Solution</div>
+                        <ul>
+                            <li>Specific to Pima County and Tucson residents</li>
+                            <li>Down payment assistance options</li>
+                            <li>Income and purchase price limits apply</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <p>Additional documentation will be required when applying for these programs. Ask your lender for specific requirements.</p>
+            </div>
+            
+            <div class="footer">
+                <h3>CONTACT INFORMATION</h3>
+                <p>For personalized guidance on lender recommendations or questions about the mortgage pre-approval process, please contact:</p>
+                
+                <div class="contact">
+                    <p><strong>BetterCallParker Realty</strong><br>
+                    SA697629000 - My Home Group<br>
+                    2910 N Swan Rd Suite 204, Tucson, AZ 85712<br>
+                    Email: parker@bettercallparker.com<br>
+                    Phone: (123) 456-7890<br>
+                    Website: www.bettercallparker.com</p>
+                </div>
+                
+                <div class="disclaimer">
+                    <p>This checklist is for informational purposes only and does not constitute financial or legal advice. Requirements may vary by lender and loan type. Information accurate as of [current date]. © BetterCallParker Realty</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="no-print" style="text-align: center; padding: 1rem; margin-top: 2rem;">
+        <button onclick="window.print()" style="padding: 0.75rem 1.5rem; background-color: #1e40af; color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: 600;">Print or Save as PDF</button>
+    </div>
+</body>
+</html>
