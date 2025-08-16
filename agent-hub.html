@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real Estate Agent Resource Hub</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            color: #7f8c8d;
+            font-weight: 400;
+        }
+
+        .back-button {
+            display: inline-block;
+            margin-bottom: 20px;
+            padding: 10px 20px;
+            background-color: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .back-button:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+        }
+
+        .quick-links {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .section-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .section-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.15);
+        }
+
+        .section-title {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 25px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #3498db;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -3px;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: #e74c3c;
+        }
+
+        .resource-item {
+            margin-bottom: 20px;
+            padding: 20px;
+            background: rgba(248, 249, 250, 0.8);
+            border-radius: 15px;
+            border-left: 4px solid #3498db;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .resource-item:hover {
+            background: rgba(241, 245, 249, 0.9);
+            transform: translateX(5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .resource-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .service-tag {
+            position: absolute;
+            top: -8px;
+            left: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        .inspections .service-tag {
+            background: linear-gradient(135deg, #fdcb6e 0%, #e17055 100%);
+        }
+
+        .property-resources .service-tag {
+            background: linear-gradient(135deg, #fd79a8 0%, #e84393 100%);
+        }
+
+        .realty-tools .service-tag {
+            background: linear-gradient(135deg, #00b894 0%, #00a085 100%);
+        }
+
+        .important-links .service-tag {
+            background: linear-gradient(135deg, #a29bfe 0%, #6c5ce7 100%);
+        }
+
+        .resource-name {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+        }
+
+        .resource-description {
+            font-size: 0.9rem;
+            color: #7f8c8d;
+            margin-bottom: 12px;
+            line-height: 1.4;
+        }
+
+        .contact-info {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .contact-link {
+            display: inline-flex;
+            align-items: center;
+            padding: 12px 18px;
+            background: linear-gradient(135deg, #74b9ff 0%, #0984e3 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            min-width: 44px;
+            min-height: 44px;
+            justify-content: center;
+            border: none;
+            cursor: pointer;
+        }
+
+        .text-btn {
+            background: linear-gradient(135deg, #00b894 0%, #00a085 100%);
+            font-size: 1rem;
+        }
+
+        .text-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(0, 184, 148, 0.4);
+        }
+
+        .contact-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.6s;
+        }
+
+        .contact-link:hover::before {
+            left: 100%;
+        }
+
+        .contact-link:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(116, 185, 255, 0.4);
+        }
+
+        .web-link {
+            display: block;
+            margin-top: 10px;
+            padding: 12px 18px;
+            background: linear-gradient(135deg, #00b894 0%, #00a085 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 10px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .web-link:hover {
+            transform: scale(1.02);
+            box-shadow: 0 8px 25px rgba(0, 184, 148, 0.3);
+        }
+
+        .property-resources .resource-item {
+            border-left-color: #fd79a8;
+        }
+
+        .inspections .resource-item {
+            border-left-color: #fdcb6e;
+        }
+
+        .realty-tools .resource-item {
+            border-left-color: #00b894;
+        }
+
+        .important-links .resource-item {
+            border-left-color: #a29bfe;
+        }
+
+        .search-container {
+            margin-bottom: 30px;
+        }
+
+        .search-box {
+            width: 100%;
+            padding: 15px 20px;
+            font-size: 1.1rem;
+            border: none;
+            border-radius: 50px;
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            outline: none;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .search-box:focus {
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .search-box::placeholder {
+            color: #95a5a6;
+        }
+
+        .last-updated {
+            text-align: center;
+            margin-top: 40px;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .section-card {
+                padding: 20px;
+            }
+            
+            .section-title {
+                font-size: 1.4rem;
+            }
+
+            .quick-links {
+                grid-template-columns: 1fr;
+            }
+
+            .contact-info {
+                flex-direction: column;
+            }
+
+            .contact-link {
+                justify-content: center;
+            }
+        }
+
+        .icon {
+            margin-right: 8px;
+            opacity: 0.9;
+        }
+
+        .highlight {
+            background: linear-gradient(135deg, #ffeaa7 0%, #fab1a0 100%);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+            100% { transform: scale(1); }
+        }
+
+        .branding {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .branding h3 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+
+        .branding p {
+            color: #7f8c8d;
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="back-button">
+            <i class="fas fa-arrow-left"></i> Back to Main Site
+        </a>
+        
+        <div class="header">
+            <h1>🏡 Real Estate Agent Resource Hub</h1>
+            <p>Your comprehensive toolkit for property research, inspections, and transactions</p>
+        </div>
+
+        <div class="search-container">
+            <input type="text" class="search-box" id="searchBox" placeholder="🔍 Search for resources, companies, or services...">
+        </div>
+
+        <div class="quick-links">
+            <!-- Property Resource Links Section -->
+            <div class="section-card property-resources">
+                <h2 class="section-title">🏠 Property Resource Links</h2>
+                
+                <div class="resource-item">
+                    <div class="service-tag">Termite DB</div>
+                    <div class="resource-name">🐛 Arizona Termite Assessment Reports</div>
+                    <div class="resource-description">Search termite inspection history reports for properties in Arizona</div>
+                    <a href="https://tarf.azda.gov/index.php?ckset=ok" class="web-link" target="_blank">Visit TARF Database</a>
+                </div>
+
+                <div class="resource-item">
+                    <div class="service-tag">Flood Maps</div>
+                    <div class="resource-name">🌊 FEMA Flood Map Service</div>
+                    <div class="resource-description">Check flood zones, flood insurance requirements, and flood risk data</div>
+                    <a href="https://msc.fema.gov/portal/home" class="web-link" target="_blank">Access Flood Maps</a>
+                </div>
+
+                <div class="resource-item">
+                    <div class="service-tag">Property Maps</div>
+                    <div class="resource-name">🗺️ PimaMaps GIS System</div>
+                    <div class="resource-description">Pima County property maps, parcel search, and geographic information</div>
+                    <a href="https://gis.pima.gov/maps/landbase/parsrch.htm" class="web-link" target="_blank">Search Properties</a>
+                </div>
+
+                <div class="resource-item">
+                    <div class="service-tag">Public Records</div>
+                    <div class="resource-name">📄 Pima County Recorder's Office</div>
+                    <div class="resource-description">Property deeds, liens, mortgages, and public records search</div>
+                    <a href="https://www.recorder.pima.gov/PublicSearch" class="web-link" target="_blank">Search Records</a>
+                </div>
+
+                <div class="resource-item">
+                    <div class="service-tag">Building Records</div>
+                    <div class="resource-name">🏗️ Pima County Building Records</div>
+                    <div class="resource-description">Request building permits, inspections, and construction records</div>
+                    <a href="https://pima-development-services.app.transform.civicplus.com/forms/33048" class="web-link" target="_blank">Submit Request Form</a>
+                </div>
+
+                <div class="resource-item">
+                    <div class="service-tag">City Records</div>
+                    <div class="resource-name">🏛️ City of Tucson Records</div>
+                    <div class="resource-description">Municipal records, permits, and property information for Tucson</div>
+                    <a href="https://pro.tucsonaz.gov/" class="web-link" target="_blank">Search City Records</a>
+                </div>
+
+                <div class="resource-item">
+                    <div class="service-tag">Town Records</div>
+                    <div class="resource-name">📋 Town of Marana Records</div>
+                    <div class="resource-description">Public records requests for properties in Marana</div>
+                    <a href="https://www.maranaaz.gov/Departments/Town-Clerk/Public-Records" class="web-link" target="_blank">Request Records</a>
+                </div>
+
+                <div class="resource-item">
+                    <div class="service-tag">Town Records</div>
+                    <div class="resource-name">🔒 Oro Valley Records</div>
+                    <div class="resource-description">Submit public records requests for Oro Valley properties</div>
+                    <a href="https://www.orovalleyaz.gov/Government/Departments/Town-Clerk/Services/Submit-a-Public-Records-Request" class="web-link" target="_blank">Submit Request</a>
+                </div>
+            </div>
+
+            <!-- Inspections Resource Section -->
+            <div class="section-card inspections">
+                <h2 class="section-title">🔍 Inspection Services</h2>
+                
+                <div class="resource-item">
+                    <div class="service-tag">Inspector</div>
+                    <div class="resource-name">🏘️ Alexis</div>
+                    <div class="resource-description">Pillar to Post Home Inspections</div>
+                    <div class="contact-info">
+                        <a href="tel:+15202713005" class="contact-link phone-btn">📞 (520) 271-3005</a>
+                    </div>
+                    <a href="https://casperteam@pillartopost.com/fbo-booking/" class="web-link" target="_blank">Online Booking</a>
+                </div>
+
+                <div class="resource-item">
+                    <div class="service-tag">Lead Paint</div>
+                    <div class="resource-name">🎨 Chris</div>
+                    <div class="resource-description">Lead Based Paint Testing</div>
+                    <div class="contact-info">
+                        <a href="tel:+15202567434" class="contact-link phone-btn">📞 (520) 256-7434</a>
+                    </div>
+                </div>
+
+                <div class="resource-item">
+                    <div class="service-tag">Termite</div>
+                    <div class="resource-name">🐛 Adam</div>
+                    <div class="resource-description">Termite Bug Stop</div>
+                    <div class="contact-info">
+                        <a href="tel:+15209990622" class="contact-link phone-btn">📞 (520) 999-0622</a>
+                    </div>
+                </div>
+
+                <div class="resource-item">
+                    <div class="service-tag">Plumber</div>
+                    <div class="resource-name">🔧 Eddie Heri</div>
+                    <div class="resource-description">Plumber Munoz</div>
+                    <div class="contact-info">
+                        <a href="tel:+15203097225" class="contact-link phone-btn">📞 (520) 309-7225</a>
+                    </div>
+                </div>
+
+                <div class="resource-item">
+                    <div class="service-tag">Handyman</div>
+                    <div class="resource-name">🔨 Dave Morgan</div>
+                    <div class="resource-description">Handyman Services</div>
+                    <div class="contact-info">
+                        <a href="tel:+15204090767" class="contact-link phone-btn">📞 (520) 409-0767</a>
+                    </div>
+                </div>
+
+                <div class="resource-item">
+                    <div class="service-tag">HVAC</div>
+                    <div class="resource-name">❄️ Luke</div>
+                    <div class="resource-description">LeDonne Heating & Cooling</div>
+                    <div class="contact-info">
+                        <a href="tel:+15202570123" class="contact-link phone-btn">📞 (520) 257-0123</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Realty Tools Section -->
+            <div class="section-card realty-tools">
+                <h2 class="section-title">🛠️ Real Estate Tools & CRM</h2>
+                
+                <div class="resource-item">
+                    <div class="service-tag">CRM</div>
+                    <div class="resource-name">📊 CINC CRM</div>
+                    <div class="resource-description">Customer relationship management and lead generation platform</div>
+                    <div class="contact-info">
+                        <span style="color: #7f8c8d; font-style: italic;">Login through your agent portal</span>
+                    </div>
+                </div>
+
+                <div class="resource-item">
+                    <div class="service-tag">Transactions</div>
+                    <div class="resource-name">📈 SkySlope Transaction Management</div>
+                    <div class="resource-description">Digital transaction management and document processing</div>
+                    <div class="contact-info">
+                        <span style="color: #7f8c8d; font-style: italic;">Access through brokerage platform</span>
+                    </div>
+                </div>
+
+                <div class="resource-item">
+                    <div class="service-tag">Lead Mgmt</div>
+                    <div class="resource-name">👥 Follow Up Boss</div>
+                    <div class="resource-description">Lead management and automated follow-up system</div>
+                    <div class="contact-info">
+                        <span style="color: #7f8c8d; font-style: italic;">Contact your broker for access</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Important Links Section -->
+            <div class="section-card important-links">
+                <h2 class="section-title">⭐ Essential Real Estate Links</h2>
+                
+                <div class="resource-item">
+                    <div class="service-tag">Licensing</div>
+                    <div class="resource-name">🏛️ Arizona Department of Real Estate</div>
+                    <div class="resource-description">License management, CE credits, and regulatory information</div>
+                    <a href="https://ptl.az.gov/dre/#/login" class="web-link" target="_blank">Access DRE Portal</a>
+                </div>
+
+                <div class="resource-item">
+                    <div class="service-tag">State MLS</div>
+                    <div class="resource-name">🏘️ Arizona Regional MLS (ARMLS)</div>
+                    <div class="resource-description">Statewide MLS system for property listings and market data</div>
+                    <a href="https://armls.com" class="web-link" target="_blank">Visit ARMLS</a>
+                </div>
+
+                <div class="resource-item">
+                    <div class="service-tag">Association</div>
+                    <div class="resource-name">🤝 West and SouthEast REALTORS®</div>
+                    <div class="resource-description">Regional realtor association and professional resources</div>
+                    <a href="https://weserv.realtor/" class="web-link" target="_blank">Visit WESERV</a>
+                </div>
+
+                <div class="resource-item">
+                    <div class="service-tag">Local MLS</div>
+                    <div class="resource-name">🏠 Tucson FlexMLS</div>
+                    <div class="resource-description">Tucson area MLS for local property searches and listings</div>
+                    <a href="https://tar.flexmls.com/" class="web-link" target="_blank">Access FlexMLS</a>
+                </div>
+
+                <div class="resource-item">
+                    <div class="service-tag">DRE Tool</div>
+                    <div class="resource-name">📋 Transaction Desk</div>
+                    <div class="resource-description">DRE-provided transaction management and document storage</div>
+                    <div class="contact-info">
+                        <a href="https://pr.transactiondesk.com/" class="contact-link" target="_blank">🌐 Main Portal</a>
+                        <a href="https://www.aaronline.com/efficient-business-tools/transactiondesk" class="contact-link" target="_blank">📚 AAR Info</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="branding">
+            <h3>BetterCallParker Realty</h3>
+            <p>SA697629000 - Omni Homes International</p>
+            <p>520-955-6533 | AaronParkerRealty@gmail.com</p>
+        </div>
+
+        <div class="last-updated">
+            Last updated: <span id="lastUpdated"></span>
+        </div>
+    </div>
+
+    <script>
+        // Search functionality
+        document.getElementById('searchBox').addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase();
+            const resourceItems = document.querySelectorAll('.resource-item');
+            const sectionCards = document.querySelectorAll('.section-card');
+            
+            // Reset all cards to visible
+            sectionCards.forEach(card => {
+                card.style.display = 'block';
+            });
+            
+            // Reset all items
+            resourceItems.forEach(item => {
+                item.classList.remove('highlight');
+                item.style.display = 'block';
+            });
+            
+            if (searchTerm.length > 0) {
+                resourceItems.forEach(item => {
+                    const itemText = item.textContent.toLowerCase();
+                    if (itemText.includes(searchTerm)) {
+                        item.classList.add('highlight');
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+                
+                // Hide sections with no visible items
+                sectionCards.forEach(card => {
+                    const visibleItems = card.querySelectorAll('.resource-item[style*="block"], .resource-item:not([style*="none"])');
+                    const highlightedItems = card.querySelectorAll('.resource-item.highlight');
+                    if (highlightedItems.length === 0) {
+                        card.style.display = 'none';
+                    }
+                });
+            }
+        });
+
+        // Set last updated date
+        document.getElementById('lastUpdated').textContent = new Date().toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        });
+
+        // Add click tracking for analytics (optional)
+        document.querySelectorAll('.contact-link, .web-link').forEach(link => {
+            link.addEventListener('click', function() {
+                console.log('Clicked:', this.textContent.trim());
+            });
+        });
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', function(e) {
+            // Focus search box when pressing '/' key
+            if (e.key === '/' && !e.target.matches('input')) {
+                e.preventDefault();
+                document.getElementById('searchBox').focus();
+            }
+            
+            // Clear search when pressing 'Escape'
+            if (e.key === 'Escape') {
+                const searchBox = document.getElementById('searchBox');
+                searchBox.value = '';
+                searchBox.dispatchEvent(new Event('input'));
+                searchBox.blur();
+            }
+        });
+    </script>
+</body>
+</html>
