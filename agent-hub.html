@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Real Estate Agent Resource Hub</title>
+    <title>Real Estate Agent Resource Hub - Tucson</title>
+    <meta name="description" content="Tucson real estate agent resources, property inspections, TARF reports, flood zones, and professional contacts">
     <style>
         * {
             margin: 0;
@@ -209,6 +210,15 @@
             box-shadow: 0 5px 15px rgba(0, 184, 148, 0.4);
         }
 
+        .phone-btn {
+            background: linear-gradient(135deg, #74b9ff 0%, #0984e3 100%);
+        }
+
+        .phone-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(116, 185, 255, 0.4);
+        }
+
         .contact-link::before {
             content: '';
             position: absolute;
@@ -222,11 +232,6 @@
 
         .contact-link:hover::before {
             left: 100%;
-        }
-
-        .contact-link:hover {
-            transform: scale(1.05);
-            box-shadow: 0 5px 15px rgba(116, 185, 255, 0.4);
         }
 
         .web-link {
@@ -296,6 +301,34 @@
             font-size: 0.9rem;
         }
 
+        .branding {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .branding h3 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+
+        .branding p {
+            color: #7f8c8d;
+            margin-bottom: 5px;
+        }
+
+        .branding a {
+            color: #3498db;
+            text-decoration: none;
+        }
+
+        .branding a:hover {
+            text-decoration: underline;
+        }
+
         @media (max-width: 768px) {
             .container {
                 padding: 15px;
@@ -323,6 +356,7 @@
 
             .contact-link {
                 justify-content: center;
+                width: 100%;
             }
         }
 
@@ -341,36 +375,15 @@
             50% { transform: scale(1.02); }
             100% { transform: scale(1); }
         }
-
-        .branding {
-            text-align: center;
-            margin-top: 40px;
-            padding: 20px;
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-        }
-
-        .branding h3 {
-            color: #2c3e50;
-            margin-bottom: 10px;
-        }
-
-        .branding p {
-            color: #7f8c8d;
-            margin-bottom: 5px;
-        }
     </style>
 </head>
 <body>
     <div class="container">
-        <a href="index.html" class="back-button">
-            <i class="fas fa-arrow-left"></i> Back to Main Site
-        </a>
+        <a href="index.html" class="back-button">← Back to Main Site</a>
         
         <div class="header">
             <h1>🏡 Real Estate Agent Resource Hub</h1>
-            <p>Your comprehensive toolkit for property research, inspections, and transactions</p>
+            <p>Your comprehensive toolkit for property research, inspections, and transactions in Tucson</p>
         </div>
 
         <div class="search-container">
@@ -433,7 +446,7 @@
 
                 <div class="resource-item">
                     <div class="service-tag">Town Records</div>
-                    <div class="resource-name">🔒 Oro Valley Records</div>
+                    <div class="resource-name">📑 Oro Valley Records</div>
                     <div class="resource-description">Submit public records requests for Oro Valley properties</div>
                     <a href="https://www.orovalleyaz.gov/Government/Departments/Town-Clerk/Services/Submit-a-Public-Records-Request" class="web-link" target="_blank">Submit Request</a>
                 </div>
@@ -445,56 +458,62 @@
                 
                 <div class="resource-item">
                     <div class="service-tag">Inspector</div>
-                    <div class="resource-name">🏘️ Alexis</div>
-                    <div class="resource-description">Pillar to Post Home Inspections</div>
+                    <div class="resource-name">🏘️ Alexis - Pillar to Post</div>
+                    <div class="resource-description">Comprehensive home inspections with online booking available</div>
                     <div class="contact-info">
-                        <a href="tel:+15202713005" class="contact-link phone-btn">📞 (520) 271-3005</a>
+                        <a href="tel:+15202713005" class="contact-link phone-btn">📞 Call</a>
+                        <a href="sms:+15202713005" class="contact-link text-btn">💬 Text</a>
                     </div>
-                    <a href="https://casperteam@pillartopost.com/fbo-booking/" class="web-link" target="_blank">Online Booking</a>
+                    <a href="https://casperteam.pillartopost.com/fbo-booking/" class="web-link" target="_blank">Online Booking</a>
                 </div>
 
                 <div class="resource-item">
                     <div class="service-tag">Lead Paint</div>
-                    <div class="resource-name">🎨 Chris</div>
-                    <div class="resource-description">Lead Based Paint Testing</div>
+                    <div class="resource-name">🎨 Chris - Lead Paint Testing</div>
+                    <div class="resource-description">EPA certified lead-based paint testing and risk assessment</div>
                     <div class="contact-info">
-                        <a href="tel:+15202567434" class="contact-link phone-btn">📞 (520) 256-7434</a>
+                        <a href="tel:+15202567434" class="contact-link phone-btn">📞 Call</a>
+                        <a href="sms:+15202567434" class="contact-link text-btn">💬 Text</a>
                     </div>
                 </div>
 
                 <div class="resource-item">
                     <div class="service-tag">Termite</div>
-                    <div class="resource-name">🐛 Adam</div>
-                    <div class="resource-description">Termite Bug Stop</div>
+                    <div class="resource-name">🐛 Adam - Termite Bug Stop</div>
+                    <div class="resource-description">Termite inspections, treatments, and TARF reports</div>
                     <div class="contact-info">
-                        <a href="tel:+15209990622" class="contact-link phone-btn">📞 (520) 999-0622</a>
+                        <a href="tel:+15209990622" class="contact-link phone-btn">📞 Call</a>
+                        <a href="sms:+15209990622" class="contact-link text-btn">💬 Text</a>
                     </div>
                 </div>
 
                 <div class="resource-item">
                     <div class="service-tag">Plumber</div>
-                    <div class="resource-name">🔧 Eddie Heri</div>
-                    <div class="resource-description">Plumber Munoz</div>
+                    <div class="resource-name">🔧 Eddie Heri - Plumber Munoz</div>
+                    <div class="resource-description">Licensed plumbing repairs, inspections, and emergency services</div>
                     <div class="contact-info">
-                        <a href="tel:+15203097225" class="contact-link phone-btn">📞 (520) 309-7225</a>
+                        <a href="tel:+15203097225" class="contact-link phone-btn">📞 Call</a>
+                        <a href="sms:+15203097225" class="contact-link text-btn">💬 Text</a>
                     </div>
                 </div>
 
                 <div class="resource-item">
                     <div class="service-tag">Handyman</div>
-                    <div class="resource-name">🔨 Dave Morgan</div>
-                    <div class="resource-description">Handyman Services</div>
+                    <div class="resource-name">🔨 Dave Morgan - Handyman</div>
+                    <div class="resource-description">General repairs, maintenance, and property improvements</div>
                     <div class="contact-info">
-                        <a href="tel:+15204090767" class="contact-link phone-btn">📞 (520) 409-0767</a>
+                        <a href="tel:+15204090767" class="contact-link phone-btn">📞 Call</a>
+                        <a href="sms:+15204090767" class="contact-link text-btn">💬 Text</a>
                     </div>
                 </div>
 
                 <div class="resource-item">
                     <div class="service-tag">HVAC</div>
-                    <div class="resource-name">❄️ Luke</div>
-                    <div class="resource-description">LeDonne Heating & Cooling</div>
+                    <div class="resource-name">❄️ Luke - LeDonne Heating & Cooling</div>
+                    <div class="resource-description">HVAC inspections, repairs, and system certifications</div>
                     <div class="contact-info">
-                        <a href="tel:+15202570123" class="contact-link phone-btn">📞 (520) 257-0123</a>
+                        <a href="tel:+15202570123" class="contact-link phone-btn">📞 Call</a>
+                        <a href="sms:+15202570123" class="contact-link text-btn">💬 Text</a>
                     </div>
                 </div>
             </div>
@@ -507,27 +526,21 @@
                     <div class="service-tag">CRM</div>
                     <div class="resource-name">📊 CINC CRM</div>
                     <div class="resource-description">Customer relationship management and lead generation platform</div>
-                    <div class="contact-info">
-                        <span style="color: #7f8c8d; font-style: italic;">Login through your agent portal</span>
-                    </div>
+                    <a href="https://app.cincpro.com/" class="web-link" target="_blank">Login to CINC</a>
                 </div>
 
                 <div class="resource-item">
                     <div class="service-tag">Transactions</div>
                     <div class="resource-name">📈 SkySlope Transaction Management</div>
                     <div class="resource-description">Digital transaction management and document processing</div>
-                    <div class="contact-info">
-                        <span style="color: #7f8c8d; font-style: italic;">Access through brokerage platform</span>
-                    </div>
+                    <a href="https://skyslope.com/login" class="web-link" target="_blank">Access SkySlope</a>
                 </div>
 
                 <div class="resource-item">
                     <div class="service-tag">Lead Mgmt</div>
                     <div class="resource-name">👥 Follow Up Boss</div>
                     <div class="resource-description">Lead management and automated follow-up system</div>
-                    <div class="contact-info">
-                        <span style="color: #7f8c8d; font-style: italic;">Contact your broker for access</span>
-                    </div>
+                    <a href="https://app.followupboss.com/login" class="web-link" target="_blank">Login to Follow Up Boss</a>
                 </div>
             </div>
 
@@ -539,7 +552,7 @@
                     <div class="service-tag">Licensing</div>
                     <div class="resource-name">🏛️ Arizona Department of Real Estate</div>
                     <div class="resource-description">License management, CE credits, and regulatory information</div>
-                    <a href="https://ptl.az.gov/dre/#/login" class="web-link" target="_blank">Access DRE Portal</a>
+                    <a href="https://ptl.az.gov/app/adre/#/login" class="web-link" target="_blank">Access DRE Portal</a>
                 </div>
 
                 <div class="resource-item">
@@ -568,8 +581,8 @@
                     <div class="resource-name">📋 Transaction Desk</div>
                     <div class="resource-description">DRE-provided transaction management and document storage</div>
                     <div class="contact-info">
-                        <a href="https://pr.transactiondesk.com/" class="contact-link" target="_blank">🌐 Main Portal</a>
-                        <a href="https://www.aaronline.com/efficient-business-tools/transactiondesk" class="contact-link" target="_blank">📚 AAR Info</a>
+                        <a href="https://pr.transactiondesk.com/" class="contact-link" target="_blank" style="background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);">🌐 Main Portal</a>
+                        <a href="https://www.aaronline.com/efficient-business-tools/transactiondesk" class="contact-link" target="_blank" style="background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%);">📚 AAR Info</a>
                     </div>
                 </div>
             </div>
@@ -577,8 +590,12 @@
 
         <div class="branding">
             <h3>BetterCallParker Realty</h3>
-            <p>SA697629000 - Omni Homes International</p>
-            <p>520-955-6533 | AaronParkerRealty@gmail.com</p>
+            <p>License: SA697629000 - Omni Homes International</p>
+            <p>
+                <a href="tel:+15209556533">📞 520-955-6533</a> | 
+                <a href="sms:+15209556533">💬 Text</a> | 
+                <a href="mailto:AaronParkerRealty@gmail.com">✉️ AaronParkerRealty@gmail.com</a>
+            </p>
         </div>
 
         <div class="last-updated">
