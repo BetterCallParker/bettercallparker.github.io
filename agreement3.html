@@ -1,152 +1,390 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Interactive Buyer Broker Agreement - BetterCallParker</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.min.js"></script>
-    <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
-    <link rel="stylesheet" href="css/agreement-styles.css">
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Interactive Buyer Broker Agreement - BetterCallParker</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <!-- PDF engines -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.min.js"></script>
+  <script>pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.worker.min.js';</script>
+  <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+
+  <style>
+    :root{
+      --primary:#1e40af;--primary-light:#3b82f6;--success:#10b981;--warning:#f59e0b;--error:#ef4444;
+      --light:#f8fafc;--dark:#0f172a;--gray:#64748b;--light-gray:#e2e8f0;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Ubuntu,'Helvetica Neue',sans-serif;color:var(--dark);background:var(--light);line-height:1.6}
+    .container{max-width:960px;margin:0 auto;padding:0 16px}
+    header{background:var(--primary);color:#fff;text-align:center;padding:1rem 0;margin-bottom:1rem}
+    .logo{font-size:1.4rem;font-weight:800}
+    .tagline{opacity:.9}
+    .nar-banner{background:linear-gradient(135deg,var(--success),#047857);color:#fff;padding:1rem;border-radius:12px;margin:1rem 0;text-align:center}
+    .nar-banner a{color:#fff;text-decoration:underline}
+    .agreement-section h2{font-size:1.25rem;margin:.5rem 0 1rem}
+    .disclaimer{background:#fff7ed;border:1px solid #fed7aa;color:#9a3412;padding:.75rem;border-radius:10px;margin:.75rem 0}
+    .pricing-box{background:linear-gradient(135deg,rgba(16,185,129,.08),rgba(5,150,105,.08));border:2px solid var(--success);border-radius:12px;padding:1rem;margin:1rem 0}
+    .instructions{background:#eef2ff;border:1px solid #c7d2fe;border-radius:10px;padding:1rem}
+    .instructions ol{margin-left:1.15rem}
+    .form-container{display:grid;grid-template-columns:1fr;gap:1rem;margin-top:1rem}
+    @media(min-width:900px){.form-container{grid-template-columns:1fr 1fr}}
+    .form-panel,.pdf-panel{background:#fff;border-radius:12px;box-shadow:0 4px 10px rgba(0,0,0,.05);padding:1rem}
+    .form-group{margin-bottom:.9rem}
+    .form-group label{display:block;margin-bottom:.4rem;font-weight:700}
+    .form-group input{width:100%;padding:.75rem;border:2px solid var(--light-gray);border-radius:8px}
+    .form-group input:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px rgba(30,64,175,.12)}
+    .checkbox-group{margin:.75rem 0}
+    .checkbox-item{display:flex;gap:.6rem;align-items:flex-start;padding:.6rem;border:2px solid var(--light-gray);border-radius:10px;background:#f8fafc;margin-bottom:.6rem}
+    .signature-container{margin:.75rem 0;padding:.75rem;background:#f8fafc;border-radius:12px;border:2px dashed var(--light-gray);position:relative}
+    #signature-pad{width:100%;height:180px;border:2px solid var(--light-gray);border-radius:8px;background:#fff;touch-action:none;cursor:crosshair}
+    .signature-buttons{display:flex;gap:.5rem;margin-top:.5rem}
+    .signature-btn{flex:1;padding:.7rem;border:none;border-radius:10px;font-weight:800;color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:.5rem}
+    .signature-btn.clear{background:#475569}
+    .signature-btn.accept{background:var(--success)}
+    .submit-btn{width:100%;padding:1rem;border:none;border-radius:999px;background:linear-gradient(135deg,var(--primary),var(--primary-light));color:#fff;font-weight:800;display:flex;align-items:center;justify-content:center;gap:.5rem}
+    .pdf-panel h3{margin-bottom:.5rem}
+    #pdf-container{position:relative;border:1px solid var(--light-gray);border-radius:10px;overflow:hidden;background:#fff}
+    #pdf-canvas{width:100%;height:auto;display:block}
+    .pdf-page-info{font-size:.9rem;color:#475569;margin-top:.5rem;text-align:right}
+    #thank-you-message{display:none;margin-top:1rem;background:#ecfdf5;border:1px solid #86efac;color:#065f46;border-radius:12px;padding:1rem;text-align:center}
+    .countdown-text{margin-top:.5rem;font-size:.95rem;color:#065f46}
+    footer{background:#0b1220;color:#fff;text-align:center;padding:1rem 0;margin-top:1.25rem;font-size:.95rem}
+  </style>
 </head>
 <body>
-    <header>
-        <div class="container">
-            <div class="logo">BetterCallParker</div>
-            <div class="tagline">Interactive Buyer Broker Agreement</div>
+  <header>
+    <div class="container">
+      <div class="logo">BetterCallParker</div>
+      <div class="tagline">Interactive Buyer Broker Agreement</div>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="nar-banner">
+      <h3>All REALTORS® are required to have this agreement signed prior to showing homes</h3>
+      <p>This is a requirement of the <a href="https://www.nar.realtor/competition-in-real-estate" target="_blank" rel="noopener">National Association of REALTORS® settlement</a> effective August 17, 2024.</p>
+      <p class="explanation">This Buyer-Broker Agreement to Show Property lets me show you homes. I’ll negotiate seller-paid commission—and if I can’t, you pay only $1 (my “$1 Promise”).</p>
+    </div>
+
+    <section class="agreement-section">
+      <h2>Complete Touring Agreement</h2>
+
+      <div class="disclaimer">
+        <p><i class="fas fa-exclamation-triangle"></i> If you’re currently working with another real estate agent, please tell me before we proceed.</p>
+      </div>
+
+      <div class="pricing-box">
+        <h3>My $1 Promise</h3>
+        <p>If I can’t negotiate seller-paid commission, you’ll only pay <strong>$1</strong> for my services.</p>
+      </div>
+
+      <div class="instructions">
+        <h3>How to complete this form</h3>
+        <ol>
+          <li>Enter your full legal name</li>
+          <li>Enter your initials (applied where needed)</li>
+          <li>Draw your signature</li>
+          <li>Click <em>Submit Signed Agreement</em></li>
+        </ol>
+      </div>
+
+      <div class="form-container">
+        <!-- Left: Form -->
+        <div class="form-panel">
+          <h3>Your Information</h3>
+
+          <form id="agreement-form" action="https://formsubmit.co/AaronParkerRealty@gmail.com" method="POST">
+            <!-- FormSubmit config -->
+            <input type="hidden" name="_subject" value="New Buyer Broker Agreement">
+            <input type="hidden" name="_captcha" value="false">
+            <input type="hidden" name="_template" value="table">
+            <input type="hidden" name="_next" value="thank-you.html">
+
+            <div class="form-group">
+              <label for="fullName">Full Legal Name *</label>
+              <input id="fullName" name="fullName" type="text" required placeholder="Your full legal name">
+            </div>
+
+            <div class="form-group">
+              <label for="initials">Your Initials *</label>
+              <input id="initials" name="initials" type="text" required maxlength="10" placeholder="e.g., A.P.">
+              <small>Your initials will be applied to required spots in the document.</small>
+            </div>
+
+            <!-- Hidden meta fields -->
+            <input type="hidden" id="hiddenStartDate" name="startDate">
+            <input type="hidden" id="hiddenExpirationDate" name="expirationDate">
+            <input type="hidden" id="signature-data" name="signature">
+
+            <div class="checkbox-group">
+              <div class="checkbox-item">
+                <input id="read" type="checkbox" name="read" required>
+                <label for="read">I have read and understand the Buyer Broker Agreement.</label>
+              </div>
+              <div class="checkbox-item">
+                <input id="terms" type="checkbox" name="terms" required>
+                <label for="terms">I agree to the terms outlined in the Buyer Broker Agreement.</label>
+              </div>
+            </div>
+
+            <div class="signature-container">
+              <label for="signature-pad"><i class="fas fa-pen-nib"></i> Sign Here *</label>
+              <canvas id="signature-pad"></canvas>
+              <div class="signature-buttons">
+                <button type="button" id="clear-signature" class="signature-btn clear"><i class="fas fa-eraser"></i> Clear</button>
+                <button type="button" id="accept-signature" class="signature-btn accept"><i class="fas fa-check"></i> Accept</button>
+              </div>
+              <small>Your signature will be placed on the agreement.</small>
+            </div>
+
+            <button class="submit-btn" type="submit">
+              <i class="fas fa-paper-plane"></i> Submit Signed Agreement
+            </button>
+
+            <!-- Post-submit -->
+            <div id="thank-you-message">
+              <h3><i class="fas fa-check-circle"></i> Thank you!</h3>
+              <p>Your signed agreement has been submitted.</p>
+              <p>A copy has been downloaded to your device.</p>
+              <p class="countdown-text">Redirecting in <span id="countdown">10</span> seconds…</p>
+            </div>
+          </form>
         </div>
-    </header>
-    
-    <main class="container">
-        <div class="nar-banner">
-            <h3>All REALTORS® are required to have this agreement signed prior to showing homes</h3>
-            <p>This is a requirement of the <a href="https://www.nar.realtor/competition-in-real-estate" target="_blank">National Association of REALTORS® settlement</a> effective as of August 17, 2024.</p>
-            <p class="explanation">This "Buyer Broker Agreement to Show Property" simply allows me to show you homes. It outlines that I'll be your agent during showings and that I'll work to negotiate my commission with the seller - not you - thanks to my $1 promise.</p>
+
+        <!-- Right: Integrated reading view (PDF on canvas) -->
+        <div class="pdf-panel">
+          <h3>Your Agreement</h3>
+          <div id="pdf-container">
+            <canvas id="pdf-canvas"></canvas>
+            <div id="form-overlay"></div>
+          </div>
+          <div class="pdf-page-info">Page <span id="page-num">1</span> of <span id="page-count">1</span></div>
         </div>
-        
-        <div class="agreement-section">
-            <h2>Complete Touring Agreement</h2>
-            
-            <div class="disclaimer">
-                <p><i class="fas fa-exclamation-triangle"></i> If you are currently working with another real estate agent, please notify me before proceeding to any showings.</p>
-            </div>
-            
-            <div class="pricing-box">
-                <h3>My $1 Promise</h3>
-                <p>I'm so confident in my ability to negotiate seller-paid commissions that if I can't get the seller to cover my commission, you'll only pay $1 for my services.</p>
-                <p>This promise is my way of building trust with clients like you. My success is tied to your satisfaction, not to extracting fees from you.</p>
-            </div>
-            
-            <div class="instructions">
-                <h3>How to complete this form:</h3>
-                <ol>
-                    <li>Fill in your full name</li>
-                    <li>Enter your initials once (they'll be applied to all required spots)</li>
-                    <li>Draw your signature in the signature pad</li>
-                    <li>Click "Submit Signed Agreement" when complete</li>
-                </ol>
-            </div>
-            
-            <div class="form-container">
-                <div class="form-panel">
-                    <h3>Your Information</h3>
-                    <!-- Form uses FormSubmit.co endpoint -->
-                    <form id="agreement-form" action="https://formsubmit.co/AaronParkerRealty@gmail.com" method="POST">
-                        <!-- FormSubmit.co configuration -->
-                        <input type="hidden" name="_subject" value="New Buyer Broker Agreement">
-                        <input type="hidden" name="_captcha" value="false">
-                        <input type="hidden" name="_template" value="table">
-                        <input type="hidden" name="_next" value="thank-you.html">
-                        
-                        <div class="form-group">
-                            <label for="fullName">Full Name:</label>
-                            <input type="text" id="fullName" name="fullName" required>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="initials">Your Initials:</label>
-                            <input type="text" id="initials" name="initials" required maxlength="10" placeholder="Type your initials">
-                            <small>Your initials will be applied to all required spots in the document</small>
-                        </div>
-                        
-                        <!-- Hidden fields for form submission -->
-                        <input type="hidden" id="hiddenStartDate" name="startDate">
-                        <input type="hidden" id="hiddenExpirationDate" name="expirationDate">
-                        <input type="hidden" id="signature-data" name="signature">
-                        
-                        <div class="checkbox-group">
-                            <div class="checkbox-item">
-                                <input type="checkbox" id="read" name="read" required>
-                                <label for="read">I have read and understand the Buyer Broker Agreement.</label>
-                            </div>
-                            
-                            <div class="checkbox-item">
-                                <input type="checkbox" id="terms" name="terms" required>
-                                <label for="terms">I agree to the terms outlined in the Buyer Broker Agreement.</label>
-                            </div>
-                        </div>
-                        
-                        <div class="signature-container">
-                            <label for="signature-pad">Sign Here:</label>
-                            <canvas id="signature-pad"></canvas>
-                            <div class="signature-buttons">
-                                <button type="button" id="clear-signature" class="signature-btn clear">
-                                    <i class="fas fa-eraser"></i> Clear
-                                </button>
-                                <button type="button" id="accept-signature" class="signature-btn accept">
-                                    <i class="fas fa-check"></i> Accept
-                                </button>
-                            </div>
-                            <small>Your signature will appear on the agreement</small>
-                        </div>
-                        
-                        <button type="submit" class="submit-btn">
-                            <i class="fas fa-paper-plane"></i> Submit Signed Agreement
-                        </button>
-                        
-                        <!-- Thank you message (hidden initially) -->
-                        <div id="thank-you-message">
-                            <h3><i class="fas fa-check-circle"></i> Thank You!</h3>
-                            <p>Your signed Buyer Broker Agreement has been submitted.</p>
-                            <p>I'll be in touch with you shortly!</p>
-                            <p>A copy of your agreement has been downloaded to your device.</p>
-                            <p class="countdown-text">Redirecting to home page in <span id="countdown">10</span> seconds...</p>
-                        </div>
-                    </form>
-                </div>
-                
-                <div class="pdf-panel">
-                    <h3>Your Agreement</h3>
-                    
-                    <div id="pdf-container">
-                        <canvas id="pdf-canvas"></canvas>
-                        <div id="form-overlay"></div>
-                    </div>
-                    
-                    <div class="pdf-controls">
-                        <div class="pdf-page-info">
-                            Page <span id="page-num">1</span> of <span id="page-count">1</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Position Helper (now visible in debug mode) -->
-            <div class="position-helper" style="display: none;">
-                <h4>Placement Helper</h4>
-                <p>Click anywhere on the PDF to get the coordinates.</p>
-                <p>Use these coordinates to update the field positions in the JavaScript file.</p>
-            </div>
-        </div>
-    </main>
-    
-    <footer>
-        <div class="container">
-            <p>BetterCallParker Realty | 520-955-6533 | AaronParkerRealty@gmail.com</p>
-            <p>&copy; 2025 BetterCallParker. All rights reserved.</p>
-        </div>
-    </footer>
-    
-    <script src="js/agreement-script.js"></script>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>BetterCallParker Realty | 520-955-6533 | AaronParkerRealty@gmail.com</p>
+      <p>&copy; 2025 BetterCallParker. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    // ====== PDF PREVIEW (READ-ONLY, INTEGRATED ON PAGE) ======
+    const CMAP_URL='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/cmaps/';
+    const FONT_URL='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/standard_fonts/';
+    const pdfCanvas=document.getElementById('pdf-canvas');
+    const ctx=pdfCanvas.getContext('2d');
+    let pdfDoc=null, pageNum=1, scale=1.5;
+
+    function renderPage(num){
+      pdfDoc.getPage(num).then(page=>{
+        const viewport=page.getViewport({scale});
+        pdfCanvas.height=viewport.height; pdfCanvas.width=viewport.width;
+        const renderTask=page.render({canvasContext:ctx,viewport});
+        return renderTask.promise.then(()=>{
+          document.getElementById('page-num').textContent=num;
+        });
+      });
+    }
+    function loadPDF(){
+      const url='./assets/Buyer Agreement to Show Property.pdf'; // keep in /assets
+      pdfjsLib.getDocument({url, cMapUrl:CMAP_URL, cMapPacked:true, standardFontDataUrl:FONT_URL}).promise
+        .then(pdf=>{ pdfDoc=pdf; document.getElementById('page-count').textContent=pdf.numPages; renderPage(pageNum); })
+        .catch(err=>{
+          // fallback visual
+          pdfCanvas.width=600; pdfCanvas.height=800;
+          ctx.fillStyle='#f1f5f9'; ctx.fillRect(0,0,600,800);
+          ctx.fillStyle='#ef4444'; ctx.font='16px sans-serif';
+          ctx.fillText('PDF preview not available.',30,60);
+          ctx.fillStyle='#334155';
+          ctx.fillText(err.message||String(err),30,90);
+        });
+    }
+
+    // ====== DATES ======
+    function setupDateFields(){
+      const today=new Date();
+      const mmddyyyy=(d)=>[(d.getMonth()+1+'').padStart(2,'0'),(d.getDate()+'').padStart(2,'0'),d.getFullYear()].join('/');
+      const start=mmddyyyy(today);
+      const exp=new Date(today); exp.setMonth(exp.getMonth()+2);
+      const end=mmddyyyy(exp);
+      document.getElementById('hiddenStartDate').value=start;
+      document.getElementById('hiddenExpirationDate').value=end;
+    }
+
+    // ====== SIGNATURE PAD (simple canvas) ======
+    function initSignaturePad(){
+      const canvas=document.getElementById('signature-pad');
+      const sigCtx=canvas.getContext('2d');
+      let isDrawing=false;
+
+      function resize(){
+        const w=canvas.clientWidth||canvas.parentElement.clientWidth;
+        const h=180;
+        const data=canvas.toDataURL(); // preserve drawing during resize (basic)
+        canvas.width=w; canvas.height=h;
+        sigCtx.fillStyle='#fff'; sigCtx.fillRect(0,0,w,h);
+        // (not restoring strokes for simplicity)
+      }
+      resize(); window.addEventListener('resize',resize);
+
+      function start(e){ isDrawing=true; const r=canvas.getBoundingClientRect(); const x=(e.touches?e.touches[0].clientX:e.clientX)-r.left; const y=(e.touches?e.touches[0].clientY:e.clientY)-r.top; sigCtx.beginPath(); sigCtx.moveTo(x,y); }
+      function move(e){ if(!isDrawing) return; const r=canvas.getBoundingClientRect(); const x=(e.touches?e.touches[0].clientX:e.clientX)-r.left; const y=(e.touches?e.touches[0].clientY:e.clientY)-r.top; sigCtx.lineWidth=2; sigCtx.lineCap='round'; sigCtx.strokeStyle='#000'; sigCtx.lineTo(x,y); sigCtx.stroke(); }
+      function end(){ isDrawing=false; }
+
+      canvas.addEventListener('mousedown',start); canvas.addEventListener('mousemove',move); canvas.addEventListener('mouseup',end); canvas.addEventListener('mouseleave',end);
+      canvas.addEventListener('touchstart',e=>{e.preventDefault();start(e);},{passive:false});
+      canvas.addEventListener('touchmove',e=>{e.preventDefault();move(e);},{passive:false});
+      canvas.addEventListener('touchend',e=>{e.preventDefault();end(e);},{passive:false});
+
+      document.getElementById('clear-signature').addEventListener('click',()=>{
+        sigCtx.fillStyle='#fff'; sigCtx.fillRect(0,0,canvas.width,canvas.height);
+        document.getElementById('signature-data').value='';
+      });
+      document.getElementById('accept-signature').addEventListener('click',()=>{
+        document.getElementById('signature-data').value=canvas.toDataURL();
+        const btn=document.getElementById('accept-signature');
+        const orig=btn.innerHTML; btn.innerHTML='<i class="fas fa-check"></i> Accepted!'; btn.style.background='#16a34a';
+        setTimeout(()=>{btn.innerHTML=orig; btn.style.background='';},1500);
+      });
+    }
+
+    // ====== GENERATE COMPLETED PDF (uses pdf-lib) ======
+    async function generateCompletedPDF(){
+      const pdfUrl='./assets/Buyer Agreement to Show Property.pdf';
+      const res=await fetch(pdfUrl); if(!res.ok) throw new Error('Could not load base PDF');
+      const baseBytes=await res.arrayBuffer();
+
+      const fullName=document.getElementById('fullName')?.value||'';
+      const startDate=document.getElementById('hiddenStartDate')?.value||'';
+      const expirationDate=document.getElementById('hiddenExpirationDate')?.value||'';
+      const signatureData=document.getElementById('signature-data')?.value||'';
+
+      const doc=await PDFLib.PDFDocument.load(baseBytes);
+      const form=doc.getForm();
+
+      // Fill known fields when present (fails gracefully if not found)
+      try{form.getTextField('Name').setText(fullName);}catch{}
+      try{form.getTextField('StartDate').setText(startDate);}catch{}
+      try{form.getTextField('EndDate').setText(expirationDate);}catch{}
+      try{form.getTextField('SigDate').setText(startDate);}catch{}
+      try{form.getCheckBox('Residential').check();}catch{}
+
+      // Place signature on last page (tuned for the AAR 1-page form)
+      if(signatureData){
+        try{
+          const png=await doc.embedPng(signatureData);
+          const pages=doc.getPages(); const last=pages[pages.length-1];
+          const {width,height}=last.getSize();
+          const sigW=width*0.22, sigH=height*0.045;
+          const x=width*0.12, y=height*0.28; // adjust if needed
+          last.drawImage(png,{x,y,width:sigW,height:sigH});
+        }catch{}
+      }
+
+      return await doc.save({updateFieldAppearances:true});
+    }
+
+    // ====== LOCK/READ-ONLY AFTER SUBMIT ======
+    function makeFormReadOnly(form){
+      [...form.elements].forEach(el=>{
+        if(el.tagName==='INPUT' || el.tagName==='TEXTAREA'){ el.readOnly=true; el.style.background='#f1f5f9'; el.style.opacity='.8'; el.style.cursor='not-allowed'; }
+        if(el.tagName==='SELECT' || el.tagName==='BUTTON'){ el.disabled=true; el.style.opacity='.8'; el.style.cursor='not-allowed'; }
+      });
+      // disable signature area
+      const sig=document.getElementById('signature-pad');
+      if(sig){
+        const parent=sig.parentNode; const clone=sig.cloneNode(true); parent.replaceChild(clone,sig);
+        const overlay=document.createElement('div');
+        overlay.style.position='absolute';overlay.style.inset='0';overlay.style.background='rgba(241,245,249,.6)';
+        overlay.style.display='flex';overlay.style.alignItems='center';overlay.style.justifyContent='center';overlay.style.zIndex='5';
+        overlay.innerHTML='<span style="background:#fff;padding:.4rem .6rem;border-radius:6px;border:1px solid #e2e8f0;font-weight:700;"><i class="fas fa-lock"></i> Signature Submitted</span>';
+        const container=document.querySelector('.signature-container'); container.style.position='relative'; container.appendChild(overlay);
+      }
+      // banner
+      const banner=document.createElement('div');
+      banner.style.background='#e9f7fe';banner.style.color='#0277bd';banner.style.padding='10px';banner.style.borderRadius='8px';
+      banner.style.marginBottom='12px';banner.style.textAlign='center';banner.style.fontWeight='800';
+      banner.innerHTML='<i class="fas fa-lock"></i> Form submitted and locked. Your information is now read-only.';
+      form.insertBefore(banner, form.firstChild);
+    }
+
+    function startRedirectCountdown(){
+      let sec=10; const el=document.getElementById('countdown'); if(!el) return; el.textContent=sec;
+      const t=setInterval(()=>{ sec--; el.textContent=sec; if(sec<=0){clearInterval(t); window.location.href='index.html';}},1000);
+    }
+
+    // ====== INIT ======
+    document.addEventListener('DOMContentLoaded', ()=>{
+      loadPDF();
+      setupDateFields();
+      initSignaturePad();
+
+      const form=document.getElementById('agreement-form');
+      form.addEventListener('submit', async (e)=>{
+        e.preventDefault();
+
+        // quick validation
+        const missing=[];
+        if(!document.getElementById('fullName').value.trim()) missing.push('• Enter your full name');
+        if(!document.getElementById('initials').value.trim()) missing.push('• Enter your initials');
+        if(!document.getElementById('read').checked) missing.push('• Confirm you have read the agreement');
+        if(!document.getElementById('terms').checked) missing.push('• Agree to the terms');
+        const sig=document.getElementById('signature-data').value;
+        if(!sig || sig.length<1000) missing.push('• Provide your signature');
+        if(missing.length){ alert('Please complete the following:\n'+missing.join('\n')); return; }
+
+        const submitBtn=form.querySelector('button[type="submit"]'); submitBtn.disabled=true; submitBtn.textContent='Submitting…';
+
+        try{
+          // build signed PDF
+          const pdfBytes=await generateCompletedPDF();
+          const blob=new Blob([pdfBytes],{type:'application/pdf'});
+          const name=(document.getElementById('fullName').value||'Client').replace(/\s+/g,'_');
+          const file=new File([blob],`BuyerBrokerAgreement_${name}.pdf`,{type:'application/pdf'});
+
+          // send to FormSubmit (multipart)
+          const fd=new FormData();
+          [...form.elements].forEach(el=>{
+            if(!el.name) return;
+            if(el.type==='checkbox'){ fd.append(el.name, el.checked ? 'true' : 'false'); }
+            else if(el.name!=='signature'){ fd.append(el.name, el.value); } // signature is embedded; optional to include
+          });
+          fd.append('agreement_pdf', file);
+
+          const res=await fetch(form.action,{method:'POST', body:fd});
+          if(!res.ok && res.status!==0) throw new Error('Form submission failed');
+
+          // download copy for user
+          const url=URL.createObjectURL(blob);
+          const a=document.createElement('a'); a.href=url; a.download=file.name; document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
+
+          // lock UI & show thanks
+          makeFormReadOnly(form);
+          submitBtn.style.display='none';
+          document.getElementById('thank-you-message').style.display='block';
+          startRedirectCountdown();
+        }catch(err){
+          console.error(err);
+          alert('There was a problem finishing your submission. Please try again.');
+          submitBtn.disabled=false; submitBtn.textContent='Submit Signed Agreement';
+        }
+      });
+
+      // If you ever land here with ?success=true (rare with custom POST), show thank-you & lock.
+      const p=new URLSearchParams(location.search);
+      if(p.get('success')==='true'){
+        makeFormReadOnly(form);
+        form.querySelector('.submit-btn').style.display='none';
+        document.getElementById('thank-you-message').style.display='block';
+        startRedirectCountdown();
+      }
+    });
+  </script>
 </body>
 </html>
