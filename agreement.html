@@ -296,6 +296,12 @@ function setStep(n){
     d.classList.toggle('active', i===n-1);
     d.classList.toggle('done', i<n-1);
   });
+
+  // Step 3 starts hidden, so its canvas initially has no measurable width.
+  // Resize it after the step becomes visible.
+  if(n===3 && typeof window.resizeSignaturePad==='function'){
+    requestAnimationFrame(()=>window.resizeSignaturePad(true));
+  }
 }
 
 /* ========= Dates ========= */
@@ -312,38 +318,136 @@ function setupDateFields(){
 /* ========= Signature Pad ========= */
 function initSignaturePad(){
   const canvas=$('#signature-pad');
+  const hidden=$('#signature-data');
+  const clearBtn=$('#clear-signature');
+  const acceptBtn=$('#accept-signature');
+  if(!canvas) return;
+
   const ctx=canvas.getContext('2d');
   let drawing=false;
+  let hasInk=false;
 
-  function size(){
-    const w=canvas.clientWidth||canvas.parentElement.clientWidth;
-    const h=200; canvas.width=w; canvas.height=h;
-    ctx.fillStyle='#fff'; ctx.fillRect(0,0,w,h);
+  function resize(preserve=true){
+    const rect=canvas.getBoundingClientRect();
+    const cssWidth=Math.round(rect.width);
+    const cssHeight=200;
+
+    // The canvas is inside a hidden step during initial page load.
+    // Wait until it has a real width before assigning its bitmap size.
+    if(cssWidth<10) return false;
+
+    const dpr=Math.max(1,window.devicePixelRatio||1);
+    const targetWidth=Math.round(cssWidth*dpr);
+    const targetHeight=Math.round(cssHeight*dpr);
+
+    // Do not clear the pad every time a new stroke begins.
+    if(canvas.width===targetWidth && canvas.height===targetHeight) return true;
+
+    let snapshot=null;
+    if(preserve && canvas.width>0 && canvas.height>0 && hasInk){
+      snapshot=document.createElement('canvas');
+      snapshot.width=canvas.width;
+      snapshot.height=canvas.height;
+      snapshot.getContext('2d').drawImage(canvas,0,0);
+    }
+
+    canvas.width=targetWidth;
+    canvas.height=targetHeight;
+    canvas.style.height=cssHeight+'px';
+
+    // Draw using CSS-pixel coordinates while retaining sharp output.
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+    ctx.fillStyle='#fff';
+    ctx.fillRect(0,0,cssWidth,cssHeight);
+    ctx.strokeStyle='#111827';
+    ctx.lineWidth=2.25;
+    ctx.lineCap='round';
+    ctx.lineJoin='round';
+
+    if(snapshot){
+      ctx.drawImage(snapshot,0,0,snapshot.width,snapshot.height,0,0,cssWidth,cssHeight);
+      if(hidden?.value) hidden.value=canvas.toDataURL('image/png');
+    }
+    return true;
   }
-  size(); addEventListener('resize',size);
 
-  const pos=e=>{const r=canvas.getBoundingClientRect(); const t=e.touches?e.touches[0]:e; return {x:t.clientX-r.left,y:t.clientY-r.top};};
-  const start=e=>{drawing=true; const p=pos(e); ctx.beginPath(); ctx.moveTo(p.x,p.y);};
-  const move=e=>{if(!drawing) return; const p=pos(e); ctx.lineWidth=2; ctx.lineCap='round'; ctx.strokeStyle='#000'; ctx.lineTo(p.x,p.y); ctx.stroke();};
-  const end=()=>{drawing=false;};
+  window.resizeSignaturePad=resize;
 
-  canvas.addEventListener('mousedown',start); canvas.addEventListener('mousemove',move);
-  canvas.addEventListener('mouseup',end); canvas.addEventListener('mouseleave',end);
-  canvas.addEventListener('touchstart',e=>{e.preventDefault();start(e)},{passive:false});
-  canvas.addEventListener('touchmove',e=>{e.preventDefault();move(e)},{passive:false});
-  canvas.addEventListener('touchend',e=>{e.preventDefault();end(e)},{passive:false});
+  function pointFromEvent(e){
+    const rect=canvas.getBoundingClientRect();
+    return {
+      x:e.clientX-rect.left,
+      y:e.clientY-rect.top
+    };
+  }
 
-  $('#clear-signature').onclick=()=>{ size(); $('#signature-data').value=''; };
-  $('#accept-signature').onclick=()=>{
-    $('#signature-data').value=canvas.toDataURL();
-    const b=$('#accept-signature'), t=b.innerHTML; b.innerHTML='<i class="fa-solid fa-check"></i> Accepted'; b.style.background='#0ea5e9';
-    setTimeout(()=>{b.innerHTML=t; b.style.background='var(--ok)';},1100);
+  function begin(e){
+    if(!resize(true)) return;
+    e.preventDefault();
+    drawing=true;
+    hasInk=true;
+    try{ canvas.setPointerCapture(e.pointerId); }catch{}
+    const p=pointFromEvent(e);
+    ctx.beginPath();
+    ctx.moveTo(p.x,p.y);
+    // Make a tap leave a visible dot.
+    ctx.lineTo(p.x+0.01,p.y+0.01);
+    ctx.stroke();
+  }
 
-// 👇 Scroll to the bottom so the Submit button/thank-you are visible
-  window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
-  };
+  function draw(e){
+    if(!drawing) return;
+    e.preventDefault();
+    const p=pointFromEvent(e);
+    ctx.lineTo(p.x,p.y);
+    ctx.stroke();
+  }
+
+  function finish(e){
+    if(!drawing) return;
+    drawing=false;
+    try{ canvas.releasePointerCapture(e.pointerId); }catch{}
+  }
+
+  canvas.addEventListener('pointerdown',begin);
+  canvas.addEventListener('pointermove',draw);
+  canvas.addEventListener('pointerup',finish);
+  canvas.addEventListener('pointercancel',finish);
+  canvas.addEventListener('lostpointercapture',()=>{drawing=false;});
+
+  clearBtn?.addEventListener('click',()=>{
+    hasInk=false;
+    if(hidden) hidden.value='';
+    resize(false);
+    acceptBtn?.removeAttribute('data-accepted');
+  });
+
+  acceptBtn?.addEventListener('click',()=>{
+    if(!hasInk){
+      alert('Please draw your signature first.');
+      return;
+    }
+    if(hidden) hidden.value=canvas.toDataURL('image/png');
+    acceptBtn.dataset.accepted='true';
+    const original=acceptBtn.innerHTML;
+    acceptBtn.innerHTML='<i class="fa-solid fa-check"></i> Accepted';
+    acceptBtn.style.background='#0ea5e9';
+    setTimeout(()=>{
+      acceptBtn.innerHTML=original;
+      acceptBtn.style.background='var(--ok)';
+    },1100);
+    window.scrollTo({top:document.body.scrollHeight,behavior:'smooth'});
+  });
+
+  window.addEventListener('resize',()=>resize(true));
+  if('ResizeObserver' in window){
+    const observer=new ResizeObserver(()=>resize(true));
+    observer.observe(canvas);
+  }
+
+  // This will harmlessly defer while Step 3 is hidden.
+  resize(false);
 }
-
 /* ========= Build Signed PDF ========= */
 async function generateCompletedPDF(){
   const res=await fetch(BASE_PDF_URL); if(!res.ok) throw new Error('Could not load base PDF');
