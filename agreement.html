@@ -516,8 +516,29 @@ document.addEventListener('DOMContentLoaded', ()=>{
       fd.append('_next','thank-you.html');
       fd.append('agreement_pdf', file);
 
-      const res=await fetch(form.action,{method:'POST', body:fd});
-      if(!res.ok && res.status!==0) throw new Error('Form submission failed');
+      // Use FormSubmit's AJAX endpoint. The regular endpoint can redirect and
+      // leave a cross-origin fetch waiting indefinitely in some browsers.
+      const controller=new AbortController();
+      const uploadTimeout=setTimeout(()=>controller.abort(),20000);
+      const ajaxEndpoint=form.action.replace('https://formsubmit.co/','https://formsubmit.co/ajax/');
+
+      let res;
+      try{
+        res=await fetch(ajaxEndpoint,{
+          method:'POST',
+          body:fd,
+          headers:{'Accept':'application/json'},
+          signal:controller.signal
+        });
+      }finally{
+        clearTimeout(uploadTimeout);
+      }
+
+      if(!res.ok){
+        let details='';
+        try{ details=await res.text(); }catch{}
+        throw new Error(`Form submission failed (${res.status}) ${details}`.trim());
+      }
 
       // Download a copy for the buyer
       const url=URL.createObjectURL(blob);
@@ -545,8 +566,12 @@ setTimeout(()=>{
 
     }catch(err){
       console.error(err);
-      alert('There was a problem sending your signed agreement. Please try again.');
-      submitBtn.disabled=false; submitBtn.textContent='Submit Signed Agreement';
+      const timedOut=err?.name==='AbortError';
+      alert(timedOut
+        ? 'The upload took too long and was stopped. Please check your connection and try again.'
+        : 'There was a problem sending your signed agreement. Please try again.');
+      submitBtn.disabled=false;
+      submitBtn.innerHTML='<i class="fa-solid fa-paper-plane"></i> Submit Signed Agreement';
     }
   });
 });
