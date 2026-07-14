@@ -164,14 +164,14 @@
 
         </div>
   
-        <!-- $1 Promise -->
+        <!-- Broker Compensation -->
         <div class="promise section">
-          <h3 style="margin:.1rem 0 .4rem">My $1 Promise</h3>
+          <h3 style="margin:.1rem 0 .4rem">Buyer Broker Compensation</h3>
           <p>
-            <p>
-                This Buyer Broker Touring Agreement to Show Property lets me show you homes.
-                I’ll negotiate seller paid commission and if I can’t, you pay only <strong>$1</strong>.
-              </p>
+            My broker compensation is <strong>3% of the purchase price</strong>. When we write an offer,
+            I will request and negotiate for the seller or the seller’s broker to pay this compensation.
+            Any amount they pay will be credited toward the 3% owed, reducing or potentially eliminating
+            the amount you would pay directly.
           </p>
         </div>
 
@@ -274,7 +274,7 @@
 </main>
 
 <footer>
-  BetterCallParker • (520) 595-6533 • AaronParkerRealty@gmail.com
+  BetterCallParker • (520) 955-6533 • AaronParkerRealty@gmail.com
 </footer>
 
 <script>
@@ -409,14 +409,12 @@ async function buildDigitalReader(){
 
       <h3>Broker Compensation</h3>
       <p><em>Broker compensation is not set by law, any board, association of REALTORS®, or MLS. It is fully negotiated between Broker and Buyer in this Agreement.</em></p>
-      <p>If Broker represents Buyer in the purchase of a property (as indicated on a purchase contract signed prior to the Expiration Date), Buyer agrees to compensate Broker as one of the following:</p>
-      <ul>
-        <li><strong>$1.00</strong> (the “$1 Promise” if seller-paid compensation cannot be negotiated); or</li>
-      </ul>
-      <p>Broker Compensation is due and paid at close of escrow. Buyer authorizes Broker to accept compensation from the seller or seller’s broker, which will be credited against the agreed Broker Compensation. Broker will not receive any amount greater than the Broker Compensation for services under this Agreement.</p>
+      <p>If Broker represents Buyer in the purchase of a property under a purchase contract signed before the Expiration Date, Buyer agrees that Broker Compensation will be <strong>3% of the purchase price</strong>.</p>
+      <p>I will request and negotiate for the seller or seller’s broker to pay all or part of this compensation as part of the purchase offer. Any amount paid by the seller or seller’s broker will be credited against the 3% Broker Compensation. Buyer is responsible only for any remaining unpaid balance, unless Broker and Buyer agree otherwise in writing.</p>
+      <p>Broker Compensation is due at close of escrow. Broker will not receive more than the agreed 3% Broker Compensation for services under this Agreement.</p>
 
       <h3>Buyer Showing Instructions</h3>
-      <p>Broker will show property listings that fit your criteria regardless of the compensation offered by the seller or seller’s broker, unless you instruct otherwise in writing. If necessary, you instruct Broker to attempt to negotiate for the seller or seller’s broker to pay the Broker Compensation. Any such negotiations will not jeopardize, delay, or interfere with the initiation, processing, or finalization of a transaction.</p>
+      <p>Broker will show property listings that fit your criteria regardless of whether compensation is offered by the seller or seller’s broker, unless you instruct otherwise in writing. When you choose a property, you authorize Broker to request and negotiate for the seller or seller’s broker to pay all or part of the 3% Broker Compensation. The requested compensation will be addressed in the purchase offer and explained to you before the offer is submitted.</p>
 
       <h3>Equal Housing Opportunity</h3>
       <p>Broker abides by all local, state, and federal fair housing laws prohibiting discrimination. For more information, see the Fair Housing Advisory.</p>
@@ -511,6 +509,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
       fd.append('startDate',$('#hiddenStartDate').value);
       fd.append('expirationDate',$('#hiddenExpirationDate').value);
       fd.append('confirmRead',$('#confirm-read').checked ? 'true':'false');
+      fd.append('brokerCompensation','3% of purchase price; seller-paid compensation to be requested and credited against amount owed');
       fd.append('_subject','New Buyer Broker Agreement');
       fd.append('_captcha','false');
       fd.append('_template','table');
