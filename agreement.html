@@ -227,17 +227,20 @@
         <h2 class="card-title">Sign & Submit</h2>
       </div>
       <div class="card-body">
-        <form id="agreement-form" action="https://formsubmit.co/AaronParkerRealty@gmail.com" method="POST">
+        <form id="agreement-form" action="https://formsubmit.co/AaronParkerRealty@gmail.com" method="POST" enctype="multipart/form-data">
           <!-- FormSubmit config -->
           <input type="hidden" name="_subject" value="New Buyer Broker Agreement">
           <input type="hidden" name="_captcha" value="false">
           <input type="hidden" name="_template" value="table">
-          <input type="hidden" name="_next" value="thank-you.html">
+          <input type="hidden" name="_next" value="https://bettercallparker.github.io/thank-you.html">
 
           <!-- Hidden meta -->
           <input type="hidden" id="hiddenStartDate" name="startDate">
           <input type="hidden" id="hiddenExpirationDate" name="expirationDate">
           <input type="hidden" id="signature-data" name="signature">
+          <input type="hidden" name="confirmRead" value="true">
+          <input type="hidden" name="brokerCompensation" value="3% of purchase price; seller-paid compensation will be requested and credited against the amount owed">
+          <input type="file" id="agreement-pdf-file" name="attachment" accept="application/pdf" hidden>
 
           <label for="fullName">Full Legal Name *</label>
           <input id="fullName" name="fullName" type="text" required placeholder="Your full legal name"/>
@@ -606,74 +609,44 @@ document.addEventListener('DOMContentLoaded', ()=>{
       const blob=new Blob([pdfBytes],{type:'application/pdf'});
       const safeName=($('#fullName').value||'Client').replace(/\s+/g,'_');
       const file=new File([blob],`BuyerBrokerAgreement_${safeName}.pdf`,{type:'application/pdf'});
-
-      // Post to FormSubmit with file attachment
-      const fd=new FormData();
-      ['fullName','initials'].forEach(id=>{ const el=$('#'+id); if(el) fd.append(el.name, el.value); });
-      fd.append('startDate',$('#hiddenStartDate').value);
-      fd.append('expirationDate',$('#hiddenExpirationDate').value);
-      fd.append('confirmRead',$('#confirm-read').checked ? 'true':'false');
-      fd.append('brokerCompensation','3% of purchase price; seller-paid compensation to be requested and credited against amount owed');
-      fd.append('_subject','New Buyer Broker Agreement');
-      fd.append('_captcha','false');
-      fd.append('_template','table');
-      fd.append('_next','thank-you.html');
-      fd.append('agreement_pdf', file);
-
-      // Use FormSubmit's AJAX endpoint. The regular endpoint can redirect and
-      // leave a cross-origin fetch waiting indefinitely in some browsers.
-      const controller=new AbortController();
-      const uploadTimeout=setTimeout(()=>controller.abort(),20000);
-      const ajaxEndpoint=form.action.replace('https://formsubmit.co/','https://formsubmit.co/ajax/');
-
-      let res;
-      try{
-        res=await fetch(ajaxEndpoint,{
-          method:'POST',
-          body:fd,
-          headers:{'Accept':'application/json'},
-          signal:controller.signal
-        });
-      }finally{
-        clearTimeout(uploadTimeout);
+      const maxUploadBytes=10*1024*1024;
+      if(file.size>maxUploadBytes){
+        throw new Error(`The generated PDF is ${(file.size/1024/1024).toFixed(1)} MB. FormSubmit allows a maximum total attachment size of 10 MB.`);
       }
 
-      if(!res.ok){
-        let details='';
-        try{ details=await res.text(); }catch{}
-        throw new Error(`Form submission failed (${res.status}) ${details}`.trim());
+      // Attach the generated PDF to a real multipart form submission.
+      // This avoids cross-origin AJAX/CORS failures with file uploads.
+      const fileInput=$('#agreement-pdf-file');
+      if(!fileInput) throw new Error('Missing generated PDF attachment field');
+      if(typeof DataTransfer==='undefined') throw new Error('This browser cannot attach the generated PDF');
+
+      const transfer=new DataTransfer();
+      transfer.items.add(file);
+      fileInput.files=transfer.files;
+
+      if(!fileInput.files || fileInput.files.length!==1){
+        throw new Error('The generated PDF could not be attached');
       }
 
-      // Download a copy for the buyer
+      // Download a copy for the buyer before the browser leaves the page.
       const url=URL.createObjectURL(blob);
-      const a=document.createElement('a'); a.href=url; a.download=file.name; document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
+      const a=document.createElement('a');
+      a.href=url;
+      a.download=file.name;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      setTimeout(()=>URL.revokeObjectURL(url),1500);
 
-      // Lock + thank you
-// Lock UI + show thank you + redirect to next stage
-lockFormUI(form);
-const ty = $('#thank-you');
-ty.style.display = 'block';
-ty.innerHTML = `
-  <h3><i class="fa-solid fa-circle-check"></i> Thank you!</h3>
-  <p>Your signed agreement has been sent successfully.</p>
-  <p><strong>Sending you to the next stage…</strong></p>
-`;
-submitBtn.style.display = 'none';
-
-// Smooth scroll to show the message
-window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
-
-// Redirect to your next step
-setTimeout(()=>{
-  window.location.href = 'https://bettercallparker.github.io/steps/search.html';
-}, 4000);
+      // Use the browser's native multipart submission. FormSubmit will send
+      // the email and then redirect to the absolute _next URL above.
+      submitBtn.textContent='Sending signed agreement…';
+      HTMLFormElement.prototype.submit.call(form);
 
     }catch(err){
-      console.error(err);
-      const timedOut=err?.name==='AbortError';
-      alert(timedOut
-        ? 'The upload took too long and was stopped. Please check your connection and try again.'
-        : 'There was a problem sending your signed agreement. Please try again.');
+      console.error('Agreement submission error:',err);
+      const message=err?.message||'Unknown error';
+      alert('The signed agreement could not be prepared for sending. Please try again.\n\nDetails: '+message);
       submitBtn.disabled=false;
       submitBtn.innerHTML='<i class="fa-solid fa-paper-plane"></i> Submit Signed Agreement';
     }
