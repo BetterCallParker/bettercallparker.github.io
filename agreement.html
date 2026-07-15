@@ -227,20 +227,17 @@
         <h2 class="card-title">Sign & Submit</h2>
       </div>
       <div class="card-body">
-        <form id="agreement-form" action="https://formsubmit.co/AaronParkerRealty@gmail.com" method="POST" enctype="multipart/form-data">
-          <!-- FormSubmit config -->
-          <input type="hidden" name="_subject" value="New Buyer Broker Agreement">
-          <input type="hidden" name="_captcha" value="false">
-          <input type="hidden" name="_template" value="table">
-          <input type="hidden" name="_next" value="https://bettercallparker.github.io/thank-you.html">
+        <form id="agreement-form" action="https://script.google.com/macros/s/AKfycbwDBIXGqnyxRuZrAHkbtDeJ-Ey6_fKiZLL3KLyi19Mtbxl9pfc3KBHdQO93vjsD_XZufQ/exec" method="POST">
 
           <!-- Hidden meta -->
           <input type="hidden" id="hiddenStartDate" name="startDate">
           <input type="hidden" id="hiddenExpirationDate" name="expirationDate">
-          <input type="hidden" id="signature-data" name="signature">
+          <input type="hidden" id="signature-data">
           <input type="hidden" name="confirmRead" value="true">
           <input type="hidden" name="brokerCompensation" value="3% of purchase price; seller-paid compensation will be requested and credited against the amount owed">
-          <input type="file" id="agreement-pdf-file" name="attachment" accept="application/pdf" hidden>
+          <input type="hidden" id="pdf-base64" name="pdfBase64">
+          <input type="hidden" id="pdf-name" name="pdfName">
+          <input type="text" name="website" tabindex="-1" autocomplete="off" style="display:none" aria-hidden="true">
 
           <label for="fullName">Full Legal Name *</label>
           <input id="fullName" name="fullName" type="text" required placeholder="Your full legal name"/>
@@ -609,24 +606,17 @@ document.addEventListener('DOMContentLoaded', ()=>{
       const blob=new Blob([pdfBytes],{type:'application/pdf'});
       const safeName=($('#fullName').value||'Client').replace(/\s+/g,'_');
       const file=new File([blob],`BuyerBrokerAgreement_${safeName}.pdf`,{type:'application/pdf'});
-      const maxUploadBytes=10*1024*1024;
-      if(file.size>maxUploadBytes){
-        throw new Error(`The generated PDF is ${(file.size/1024/1024).toFixed(1)} MB. FormSubmit allows a maximum total attachment size of 10 MB.`);
-      }
 
-      // Attach the generated PDF to a real multipart form submission.
-      // This avoids cross-origin AJAX/CORS failures with file uploads.
-      const fileInput=$('#agreement-pdf-file');
-      if(!fileInput) throw new Error('Missing generated PDF attachment field');
-      if(typeof DataTransfer==='undefined') throw new Error('This browser cannot attach the generated PDF');
-
-      const transfer=new DataTransfer();
-      transfer.items.add(file);
-      fileInput.files=transfer.files;
-
-      if(!fileInput.files || fileInput.files.length!==1){
-        throw new Error('The generated PDF could not be attached');
-      }
+      // Send the signed PDF to Google Apps Script as Base64. The receiver
+      // recreates the PDF and emails it as a Gmail attachment.
+      const pdfDataUrl=await new Promise((resolve,reject)=>{
+        const reader=new FileReader();
+        reader.onload=()=>resolve(reader.result);
+        reader.onerror=()=>reject(new Error('Your browser could not prepare the signed PDF.'));
+        reader.readAsDataURL(blob);
+      });
+      $('#pdf-base64').value=pdfDataUrl.split(',')[1];
+      $('#pdf-name').value=file.name;
 
       // Download a copy for the buyer before the browser leaves the page.
       const url=URL.createObjectURL(blob);
@@ -638,8 +628,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
       a.remove();
       setTimeout(()=>URL.revokeObjectURL(url),1500);
 
-      // Use the browser's native multipart submission. FormSubmit will send
-      // the email and then redirect to the absolute _next URL above.
+      // Apps Script emails the attachment and returns the success page.
       submitBtn.textContent='Sending signed agreement…';
       HTMLFormElement.prototype.submit.call(form);
 
